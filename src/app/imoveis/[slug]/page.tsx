@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: `${imovel.tipo} em ${imovel.localizacao}`,
       type: 'website',
       locale: 'pt_BR',
-      ...(imovel.fotos?.[0]?.asset && {
-        images: [{ url: urlFor(imovel.fotos[0]).width(1200).height(630).fit('crop').url() }],
+      ...((imovel.fotoCapa?.asset || imovel.fotos?.[0]?.asset) && {
+        images: [{ url: urlFor(imovel.fotoCapa || imovel.fotos[0]).width(1200).height(630).fit('crop').url() }],
       }),
     },
   }

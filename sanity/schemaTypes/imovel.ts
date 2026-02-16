@@ -99,9 +99,17 @@ export const imovelType = defineType({
       of: [{ type: 'block' }],
     }),
     defineField({
+      name: 'fotoCapa',
+      title: 'Foto Capa',
+      type: 'image',
+      description: 'Foto exibida nos cards e listagem. Se não definida, usa a primeira foto da galeria.',
+      options: { hotspot: true },
+    }),
+    defineField({
       name: 'fotos',
-      title: 'Fotos',
+      title: 'Galeria de Fotos',
       type: 'array',
+      description: 'Selecione todas as fotos de uma vez: clique em "Add item" → "Upload" e segure Ctrl (Windows) ou ⌘ (Mac) para selecionar múltiplos arquivos. Arraste para reordenar.',
       of: [
         {
           type: 'image',
@@ -115,6 +123,9 @@ export const imovelType = defineType({
           ],
         },
       ],
+      options: {
+        layout: 'grid',
+      },
     }),
     defineField({
       name: 'destaque',

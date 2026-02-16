@@ -18,9 +18,9 @@ export const IMOVEIS_QUERY = defineQuery(`
     banheiros,
     vagas,
     destaque,
-    "fotoCapa": fotos[0] {
-      asset,
-      alt
+    "fotoCapa": {
+      "asset": coalesce(fotoCapa.asset, fotos[0].asset),
+      "alt": coalesce(fotoCapa.alt, fotos[0].alt)
     }
   }
 `)
@@ -42,6 +42,10 @@ export const IMOVEL_QUERY = defineQuery(`
     vagas,
     destaque,
     descricao,
+    fotoCapa {
+      asset,
+      alt
+    },
     fotos[] {
       asset,
       alt
