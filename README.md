@@ -12,8 +12,8 @@ Site institucional de corretora de imóveis. Desenvolvido com Next.js, Sanity CM
 |---|---|
 | **Next.js 16** (App Router) | Framework React — renderização, roteamento, SEO |
 | **Tailwind CSS v4** | Estilização (CSS-first, sem `tailwind.config.ts`) |
-| **Sanity CMS** | Banco de dados e editor de conteúdo (imóveis, perfil) |
-| **Vercel** | Hospedagem e deploy automático |
+| **Sanity CMS** | Banco de dados e editor de conteúdo (imóveis, perfil, textos do site) |
+| **Vercel** | Hospedagem e deploy |
 | **TypeScript** | Tipagem estática |
 
 ---
@@ -22,12 +22,12 @@ Site institucional de corretora de imóveis. Desenvolvido com Next.js, Sanity CM
 
 | Rota | Descrição |
 |---|---|
-| `/` | Homepage — hero com foto, busca rápida, diferenciais, CTA |
+| `/` | Homepage — hero, busca rápida, cards de imóveis, diferenciais, CTA |
 | `/vendas` | Listagem de imóveis com filtros (tipo, preço, busca livre) |
 | `/imoveis/[slug]` | Página individual do imóvel — galeria, dados, botão WhatsApp |
 | `/a-corretora` | Bio, foto, valores e diferenciais da Manuela |
 | `/contato` | WhatsApp, Instagram e localização |
-| `/studio` | Sanity Studio — editor de conteúdo (protegido por login) |
+| `/studio` | Sanity Studio — editor de conteúdo (protegido por login Sanity) |
 
 ---
 
@@ -35,21 +35,43 @@ Site institucional de corretora de imóveis. Desenvolvido com Next.js, Sanity CM
 
 ### Frontend
 - **Design minimal luxury** — paleta escura (#111111) com dourado (#b8976a), tipografia com tracking largo
-- **Responsivo** — mobile-first, layout adaptado para todos os tamanhos de tela
+- **Responsivo** — mobile-first, menu mobile com animação hamburger → X, layout adaptado para todos os tamanhos
+- **Imóveis na homepage** — cards de imóveis exibidos logo após a busca rápida (até 6, revalidados a cada 60s)
 - **Busca rápida na homepage** — filtros por tipo e faixa de preço que redirecionam para `/vendas`
 - **Listagem com filtros client-side** — tipo de imóvel, faixa de preço e busca por texto (sem reload de página)
 - **Galeria com lightbox** — miniaturas clicáveis, navegação por setas, contador de fotos
 - **WhatsApp flutuante** — botão fixo em todas as páginas (bottom-right)
 - **WhatsApp por imóvel** — cada card e página de imóvel tem botão com mensagem pré-formatada identificando o imóvel
-- **SEO completo** — `title`, `description` e Open Graph individuais por página
+- **SEO + Open Graph** — `title`, `description` e imagem OG individuais por página; imagem padrão com foto da corretora gerada dinamicamente (1200×630)
 - **ISR (Incremental Static Regeneration)** — páginas de imóveis revalidam a cada 60s
 - **Otimização de imagens** — `next/image` com lazy loading, formato moderno, CDN Sanity
 
-### CMS (Sanity Studio)
-- **Tipo `imovel`** — título, slug, tipo, status, preço, localização, bairro, cidade, área, quartos, banheiros, vagas, fotos, descrição, destaque
-- **Tipo `corretora`** — nome, CRECI, foto, bio, valores/diferenciais, WhatsApp, Instagram
-- Manuela gerencia todo o conteúdo diretamente pelo Studio em `/studio`
-- Novo imóvel publicado aparece no site em até 60 segundos
+### CMS (Sanity Studio `/studio`)
+
+Todo o conteúdo do site é gerenciado pela corretora diretamente no Studio, sem tocar em código.
+
+#### Tipo `imovel`
+| Campo | Descrição |
+|---|---|
+| Título, Slug | Nome e URL do imóvel |
+| Tipo | Casa / Apartamento / Studio / Terreno / Comercial |
+| Status | **À Venda** (visível no site) · **Pausado** (oculto no site, editável no Studio) · Vendido · Aluguel · Arquivado |
+| Preço, Área, Quartos, Banheiros, Vagas | Dados numéricos |
+| Localização, Bairro, Cidade | Endereço |
+| Foto Capa | Foto exibida nos cards e listagem (se vazia, usa a 1ª da galeria) |
+| Galeria de Fotos | Upload múltiplo (Ctrl/⌘ para selecionar vários arquivos), layout grid, drag para reordenar |
+| Descrição | Texto rich-text |
+| Destaque | Booleano |
+
+#### Tipo `corretora` (singleton — 3 grupos)
+
+**Perfil** — nome, CRECI, foto, biografia, valores/diferenciais da página A Corretora
+
+**Homepage** — título e subtítulo do hero, 3 diferenciais numerados, texto do CTA
+
+**Contato** — WhatsApp, Instagram, localização e complemento de localização
+
+> Alterações salvas no Studio aparecem no site em até 60 segundos.
 
 ---
 
@@ -59,45 +81,47 @@ Site institucional de corretora de imóveis. Desenvolvido com Next.js, Sanity CM
 manuela-rezende/
 ├── sanity/
 │   └── schemaTypes/
-│       ├── index.ts          # Registro dos schemas
-│       ├── imovel.ts         # Schema do imóvel
-│       └── corretora.ts      # Schema do perfil da corretora
-├── sanity.config.ts          # Configuração do Sanity Studio
+│       ├── index.ts               # Registro dos schemas
+│       ├── imovel.ts              # Schema do imóvel
+│       └── corretora.ts           # Schema do perfil da corretora + textos do site
+├── sanity.config.ts               # Configuração do Sanity Studio
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx        # Layout global (Header, Footer, WhatsAppButton)
-│   │   ├── page.tsx          # Homepage
+│   │   ├── layout.tsx             # Layout global (Header, Footer, WhatsAppButton, metadataBase)
+│   │   ├── opengraph-image.tsx    # Imagem OG padrão 1200×630 (foto da corretora + branding)
+│   │   ├── page.tsx               # Homepage (fetch imoveis + corretora, textos do CMS)
 │   │   ├── vendas/
-│   │   │   └── page.tsx      # Listagem de imóveis
+│   │   │   └── page.tsx           # Listagem de imóveis
 │   │   ├── imoveis/[slug]/
-│   │   │   ├── page.tsx      # Página individual do imóvel
+│   │   │   ├── page.tsx           # Página individual do imóvel
 │   │   │   └── GalleryClient.tsx  # Galeria interativa (client component)
 │   │   ├── a-corretora/
-│   │   │   └── page.tsx      # Página "A Corretora"
+│   │   │   └── page.tsx           # Página "A Corretora"
 │   │   ├── contato/
-│   │   │   └── page.tsx      # Página de contato
+│   │   │   └── page.tsx           # Página de contato (dados do CMS)
 │   │   └── studio/[[...tool]]/
-│   │       ├── page.tsx      # Rota do Studio (server, exporta metadata)
+│   │       ├── page.tsx           # Rota do Studio (server, exporta metadata)
 │   │       ├── StudioClient.tsx   # NextStudio (client component)
-│   │       └── loading.tsx   # Loading state do Studio
+│   │       └── loading.tsx        # Loading state do Studio
 │   ├── components/
-│   │   ├── Header.tsx        # Navegação sticky com menu mobile
-│   │   ├── Footer.tsx        # Rodapé com links e copyright
-│   │   ├── WhatsAppButton.tsx # Botão flutuante do WhatsApp
-│   │   ├── ImovelCard.tsx    # Card de imóvel (foto, preço, specs, ações)
-│   │   ├── ImovelGrid.tsx    # Grid com filtros client-side
-│   │   └── SearchStrip.tsx   # Busca rápida da homepage
+│   │   ├── Header.tsx             # Navegação sticky com menu mobile funcional
+│   │   ├── Footer.tsx             # Rodapé com links e copyright
+│   │   ├── WhatsAppButton.tsx     # Botão flutuante do WhatsApp
+│   │   ├── ImovelCard.tsx         # Card de imóvel (foto, preço, specs, ações)
+│   │   ├── ImovelGrid.tsx         # Grid com filtros client-side
+│   │   └── SearchStrip.tsx        # Busca rápida da homepage
 │   └── sanity/
-│       ├── env.ts            # Variáveis de ambiente do Sanity
+│       ├── env.ts                 # Variáveis de ambiente do Sanity
 │       └── lib/
-│           ├── client.ts     # Cliente Sanity
-│           ├── image.ts      # Helper urlFor() para imagens
-│           └── queries.ts    # Queries GROQ (imoveis, corretora)
+│           ├── client.ts          # Cliente Sanity
+│           ├── image.ts           # Helper urlFor() para imagens
+│           └── queries.ts         # Queries GROQ (imoveis, corretora)
 ├── public/
-│   └── manuela-rezende.png   # Foto da Manuela (hero)
+│   └── manuela-rezende.png        # Foto da Manuela (hero + OG image)
 ├── scripts/
-│   └── seed-sanity.mjs       # Script para seed inicial de conteúdo
-└── next.config.ts            # Config Next.js (remotePatterns, serverExternalPackages)
+│   ├── seed-sanity.mjs            # Seed do imóvel inicial (com upload de fotos)
+│   └── seed-corretora.mjs         # Seed do documento corretora (criar uma vez)
+└── next.config.ts                 # Config Next.js (remotePatterns, serverExternalPackages)
 ```
 
 ---
@@ -111,16 +135,11 @@ manuela-rezende/
 ### Instalação
 
 ```bash
-# Clonar o repositório
 git clone https://github.com/vitorcoelhof/manuela-rezende.git
 cd manuela-rezende
-
-# Instalar dependências
 npm install
-
-# Criar arquivo de variáveis de ambiente
 cp .env.example .env.local
-# Preencher com os valores do projeto Sanity
+# Preencher .env.local com os valores abaixo
 ```
 
 ### Variáveis de Ambiente
@@ -142,19 +161,25 @@ Abre em http://localhost:3000. Studio disponível em http://localhost:3000/studi
 
 ### Seed de Conteúdo
 
-Para popular o banco com conteúdo inicial (imóvel exemplo):
+Executar uma vez para criar o documento da corretora no Sanity:
+
+```bash
+node scripts/seed-corretora.mjs
+```
+
+Para popular com um imóvel de exemplo (fotos em `../fotos/Imoveis/`):
 
 ```bash
 node scripts/seed-sanity.mjs
 ```
 
-Requer `SANITY_API_TOKEN` no `.env.local` com permissão de escrita. As fotos devem estar em `../fotos/Imoveis/`.
+Ambos requerem `SANITY_API_TOKEN` no `.env.local` com permissão de escrita.
 
 ---
 
 ## Deploy
 
-O projeto faz deploy automático na Vercel. Para deploy manual:
+O deploy é manual via Vercel CLI:
 
 ```bash
 npx vercel --prod
@@ -183,19 +208,23 @@ O projeto foi desenvolvido como template reutilizável. Para usar em outro proje
 2. **Criar novo repositório** no GitHub (fork ou novo repo)
 3. **Criar novo projeto Vercel** vinculado ao repositório
 4. **Atualizar variáveis de ambiente** com o novo `projectId` e token
-5. **Atualizar dados do corretor** em:
-   - `src/app/layout.tsx` — número WhatsApp e mensagem padrão
-   - `src/app/contato/page.tsx` — WhatsApp, Instagram
+5. **Atualizar dados fixos no código:**
+   - `src/app/layout.tsx` — número WhatsApp do botão flutuante
+   - `src/app/opengraph-image.tsx` — URL da foto para a imagem OG
    - `public/` — foto do corretor
-6. **Executar seed** com as fotos do corretor e imóveis iniciais
+6. **Executar seeds** para criar os documentos iniciais no Sanity
+7. **Editar conteúdo no Studio** — todos os textos, WhatsApp, Instagram, localização
 
 ---
 
 ## Decisões Técnicas
 
 - **Tailwind v4** — CSS-first com `@import "tailwindcss"` e bloco `@theme` no `globals.css`. Sem `tailwind.config.ts`.
-- **Sanity Studio** — separado em `StudioClient.tsx` com `'use client'` para evitar erro de serialização de funções no Next.js App Router.
-- **ISR com revalidate: 60** — imóveis individuais e listagem revalidam a cada 60s após publicação no CMS.
+- **Sanity Studio em `'use client'`** — `StudioClient.tsx` importa o config diretamente para evitar erro de serialização de funções no Next.js App Router ("Functions cannot be passed directly to Client Components").
+- **ISR com revalidate: 60** — homepage, listagem, imóveis individuais e contato revalidam a cada 60s após publicação no CMS.
 - **Filtros client-side** — `ImovelGrid.tsx` gerencia estado local para evitar requisições desnecessárias ao servidor.
 - **`serverExternalPackages: ['sanity', 'styled-components']`** — evita crash SSR do Sanity/styled-components no Vercel.
 - **Schemas na raiz** — `sanity/schemaTypes/` na raiz do projeto (não em `src/`) para compatibilidade com `sanity.config.ts`.
+- **`fotoCapa` dedicada** — campo separado para capa dos cards; query usa `coalesce(fotoCapa, fotos[0])` como fallback.
+- **`opengraph-image.tsx`** — imagem OG gerada dinamicamente via `ImageResponse` (edge runtime), sem arquivo estático adicional.
+- **Status `pausado`** — imóvel fica editável no Studio mas invisível no site (query filtra apenas `status == "venda"`).
