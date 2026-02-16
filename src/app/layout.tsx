@@ -22,8 +22,8 @@ export const metadata: Metadata = {
 
 // WhatsApp number — PLACEHOLDER until confirmed by client
 // Format: E.164 without '+' — e.g. '5511987654321' for São Paulo mobile
-const WHATSAPP_NUMBER = 'PLACEHOLDER'
-const WHATSAPP_MESSAGE = 'Olá, Manuela! Tenho interesse em um imóvel.'
+const WHATSAPP_NUMBER = '5548999770241'
+const WHATSAPP_MESSAGE = 'Olá, gostaria de mais informações sobre um imóvel'
 
 export default function RootLayout({
   children,
