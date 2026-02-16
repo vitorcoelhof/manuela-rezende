@@ -1,4 +1,8 @@
 import type { Metadata } from 'next'
+import { client } from '@/sanity/lib/client'
+import { CORRETORA_QUERY } from '@/sanity/lib/queries'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Contato',
@@ -11,11 +15,18 @@ export const metadata: Metadata = {
   },
 }
 
-const WHATSAPP = '5548999770241'
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Olá Manuela, gostaria de mais informações sobre imóveis')}`
-const INSTAGRAM = 'manuelarezendeimoveis'
+export default async function ContatoPage() {
+  const corretora = await client.fetch(CORRETORA_QUERY, {}, { next: { revalidate: 60 } })
 
-export default function ContatoPage() {
+  const whatsapp = corretora?.whatsapp || '5548999770241'
+  const instagram = corretora?.instagram || 'manuelarezendeimoveis'
+  const localizacao = corretora?.localizacao || 'Florianópolis, Santa Catarina'
+  const localizacaoComplemento = corretora?.localizacaoComplemento || 'Atendimento em toda a região'
+
+  // Format display number: 5548999770241 → (48) 99977-0241
+  const whatsappDisplay = whatsapp.replace(/^55(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3')
+  const whatsappUrl = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Olá Manuela, gostaria de mais informações sobre imóveis')}`
+
   return (
     <>
       {/* Header */}
@@ -39,7 +50,7 @@ export default function ContatoPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* WhatsApp */}
             <a
-              href={WHATSAPP_URL}
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="group bg-white border border-[#e5e5e5] p-8 hover:border-[#25d366] hover:shadow-sm transition-all"
@@ -53,12 +64,12 @@ export default function ContatoPage() {
               <p className="text-[13px] text-[#666666] leading-relaxed mb-3">
                 Canal principal de atendimento. Resposta rápida em horário comercial.
               </p>
-              <p className="text-[13px] font-medium text-[#25d366] group-hover:underline">(48) 99977-0241 →</p>
+              <p className="text-[13px] font-medium text-[#25d366] group-hover:underline">{whatsappDisplay} →</p>
             </a>
 
             {/* Instagram */}
             <a
-              href={`https://instagram.com/${INSTAGRAM}`}
+              href={`https://instagram.com/${instagram}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group bg-white border border-[#e5e5e5] p-8 hover:border-[#b8976a] hover:shadow-sm transition-all"
@@ -74,7 +85,7 @@ export default function ContatoPage() {
               <p className="text-[13px] text-[#666666] leading-relaxed mb-3">
                 Acompanhe os imóveis disponíveis e novidades do mercado.
               </p>
-              <p className="text-[13px] font-medium text-[#b8976a] group-hover:underline">@{INSTAGRAM} →</p>
+              <p className="text-[13px] font-medium text-[#b8976a] group-hover:underline">@{instagram} →</p>
             </a>
 
             {/* Location */}
@@ -87,9 +98,13 @@ export default function ContatoPage() {
               </div>
               <h3 className="text-[14px] font-semibold text-[#111111] uppercase tracking-wide mb-2">Localização</h3>
               <p className="text-[13px] text-[#666666] leading-relaxed">
-                Florianópolis, Santa Catarina
-                <br />
-                Atendimento em toda a região
+                {localizacao}
+                {localizacaoComplemento && (
+                  <>
+                    <br />
+                    {localizacaoComplemento}
+                  </>
+                )}
               </p>
             </div>
           </div>
@@ -104,7 +119,7 @@ export default function ContatoPage() {
             <p className="text-[13px] text-[#999999] mt-1">Mande uma mensagem agora mesmo.</p>
           </div>
           <a
-            href={WHATSAPP_URL}
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="shrink-0 inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#111111] text-[13px] font-semibold tracking-wide uppercase hover:bg-[#f5f5f5] transition-colors"

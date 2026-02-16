@@ -64,8 +64,15 @@ export const CORRETORA_QUERY = defineQuery(`
     creci,
     bio,
     valores,
+    heroTitulo,
+    heroSubtitulo,
+    homeDiferenciais,
+    ctaTitulo,
+    ctaSubtitulo,
     whatsapp,
     instagram,
+    localizacao,
+    localizacaoComplemento,
     foto {
       asset,
       alt
