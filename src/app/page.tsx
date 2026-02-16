@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import SearchStrip from '@/components/SearchStrip'
 
 export const metadata: Metadata = {
   title: 'Imóveis à Venda',
@@ -63,6 +64,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Search strip */}
+      <SearchStrip />
 
       {/* Divider */}
       <div className="h-px bg-[#e5e5e5]" />
