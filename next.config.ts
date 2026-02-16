@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  serverExternalPackages: ['sanity'],
+  serverExternalPackages: ['sanity', 'styled-components'],
   turbopack: {
     root: path.resolve(__dirname),
   },
