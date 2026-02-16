@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -16,30 +17,49 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-[#111111] text-white">
-        <div className="mx-auto max-w-6xl px-6 lg:px-8 py-24 md:py-36">
-          <p className="text-[11px] tracking-[0.25em] uppercase text-[#b8976a] font-medium mb-6">
-            Corretora de Imóveis
-          </p>
-          <h1 className="text-4xl md:text-6xl font-light tracking-tight leading-tight max-w-2xl">
-            Encontre o imóvel certo com quem entende do mercado.
-          </h1>
-          <p className="mt-6 text-[15px] text-[#999999] max-w-lg leading-relaxed">
-            Atendimento personalizado, seleção de imóveis residenciais e contato direto pelo WhatsApp.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/vendas"
-              className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#111111] text-[13px] font-semibold tracking-wide uppercase hover:bg-[#f5f5f5] transition-colors"
-            >
-              Ver Imóveis
-            </Link>
-            <Link
-              href="/contato"
-              className="inline-flex items-center justify-center px-8 py-3.5 border border-white/30 text-white text-[13px] font-semibold tracking-wide uppercase hover:border-white/60 transition-colors"
-            >
-              Falar com a Manuela
-            </Link>
+      <section className="bg-[#111111] text-white overflow-hidden">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center md:items-stretch gap-0">
+            {/* Text content */}
+            <div className="flex-1 py-24 md:py-36 md:pr-12">
+              <p className="text-[11px] tracking-[0.25em] uppercase text-[#b8976a] font-medium mb-6">
+                Corretora de Imóveis
+              </p>
+              <h1 className="text-4xl md:text-6xl font-light tracking-tight leading-tight">
+                Encontre o imóvel certo com quem entende do mercado.
+              </h1>
+              <p className="mt-6 text-[15px] text-[#999999] max-w-lg leading-relaxed">
+                Atendimento personalizado, seleção de imóveis residenciais e contato direto pelo WhatsApp.
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/vendas"
+                  className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#111111] text-[13px] font-semibold tracking-wide uppercase hover:bg-[#f5f5f5] transition-colors"
+                >
+                  Ver Imóveis
+                </Link>
+                <Link
+                  href="/contato"
+                  className="inline-flex items-center justify-center px-8 py-3.5 border border-white/30 text-white text-[13px] font-semibold tracking-wide uppercase hover:border-white/60 transition-colors"
+                >
+                  Falar com a Manuela
+                </Link>
+              </div>
+            </div>
+
+            {/* Manuela photo */}
+            <div className="hidden md:flex flex-shrink-0 w-[340px] lg:w-[400px] relative self-stretch">
+              <Image
+                src="/manuela-rezende.png"
+                alt="Manuela Rezende — Corretora de Imóveis"
+                fill
+                className="object-cover object-top"
+                priority
+                sizes="400px"
+              />
+              {/* Fade gradient on left edge to blend with dark bg */}
+              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#111111] to-transparent" />
+            </div>
           </div>
         </div>
       </section>
