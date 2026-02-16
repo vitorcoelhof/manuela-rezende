@@ -40,6 +40,7 @@ export const imovelType = defineType({
       options: {
         list: [
           { title: 'À Venda', value: 'venda' },
+          { title: 'Pausado (oculto no site)', value: 'pausado' },
           { title: 'Vendido', value: 'vendido' },
           { title: 'Aluguel', value: 'aluguel' },
           { title: 'Arquivado', value: 'arquivado' },
