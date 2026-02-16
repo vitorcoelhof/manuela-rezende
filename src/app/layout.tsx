@@ -8,6 +8,7 @@ import WhatsAppButton from '@/components/WhatsAppButton'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://manuela-rezende.vercel.app'),
   title: {
     default: 'Manuela Rezende Imóveis',
     template: '%s | Manuela Rezende Imóveis',
