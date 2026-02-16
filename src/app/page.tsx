@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import SearchStrip from '@/components/SearchStrip'
 import ImovelCard from '@/components/ImovelCard'
+import ConsultaForm from '@/components/ConsultaForm'
 import { client } from '@/sanity/lib/client'
 import { IMOVEIS_QUERY, CORRETORA_QUERY } from '@/sanity/lib/queries'
 
@@ -132,6 +133,11 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      {/* Consulta form for people who didn't find their property */}
+      <section className="bg-[#f9f9f9] border-t border-[#e5e5e5]">
+        <ConsultaForm />
+      </section>
 
       {/* Divider */}
       <div className="h-px bg-[#e5e5e5]" />
