@@ -31,6 +31,7 @@ const TIPOS = [
   { value: '', label: 'Todos os tipos' },
   { value: 'casa', label: 'Casa' },
   { value: 'apartamento', label: 'Apartamento' },
+  { value: 'studio', label: 'Studio' },
   { value: 'terreno', label: 'Terreno' },
   { value: 'comercial', label: 'Comercial' },
 ]

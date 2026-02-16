@@ -26,6 +26,7 @@ export const imovelType = defineType({
         list: [
           { title: 'Casa', value: 'casa' },
           { title: 'Apartamento', value: 'apartamento' },
+          { title: 'Studio', value: 'studio' },
           { title: 'Terreno', value: 'terreno' },
           { title: 'Comercial', value: 'comercial' },
         ],

@@ -7,6 +7,7 @@ const TIPOS = [
   { value: '', label: 'Tipo' },
   { value: 'casa', label: 'Casa' },
   { value: 'apartamento', label: 'Apartamento' },
+  { value: 'studio', label: 'Studio' },
   { value: 'terreno', label: 'Terreno' },
 ]
 
