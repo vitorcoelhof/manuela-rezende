@@ -1,8 +1,8 @@
-# Manuela Rezende Imóveis
+# Site Corretor de Imóveis
 
-Site institucional de corretora de imóveis. Desenvolvido com Next.js, Sanity CMS e Vercel.
+Template de site institucional para corretor de imóveis. Desenvolvido com Next.js, Sanity CMS e Vercel.
 
-**Produção:** https://manuela-rezende.vercel.app
+> Instância atual em produção: https://manuela-rezende.vercel.app
 
 ---
 
@@ -25,7 +25,7 @@ Site institucional de corretora de imóveis. Desenvolvido com Next.js, Sanity CM
 | `/` | Homepage — hero, busca rápida, cards de imóveis, diferenciais, CTA |
 | `/vendas` | Listagem de imóveis com filtros (tipo, preço, busca livre) |
 | `/imoveis/[slug]` | Página individual do imóvel — galeria, dados, botão WhatsApp |
-| `/a-corretora` | Bio, foto, valores e diferenciais da Manuela |
+| `/a-corretora` | Bio, foto, valores e diferenciais do corretor |
 | `/contato` | WhatsApp, Instagram e localização |
 | `/studio` | Sanity Studio — editor de conteúdo (protegido por login Sanity) |
 
@@ -42,13 +42,13 @@ Site institucional de corretora de imóveis. Desenvolvido com Next.js, Sanity CM
 - **Galeria com lightbox** — miniaturas clicáveis, navegação por setas, contador de fotos
 - **WhatsApp flutuante** — botão fixo em todas as páginas (bottom-right)
 - **WhatsApp por imóvel** — cada card e página de imóvel tem botão com mensagem pré-formatada identificando o imóvel
-- **SEO + Open Graph** — `title`, `description` e imagem OG individuais por página; imagem padrão com foto da corretora gerada dinamicamente (1200×630)
+- **SEO + Open Graph** — `title`, `description` e imagem OG individuais por página; imagem padrão com foto do corretor gerada dinamicamente (1200×630)
 - **ISR (Incremental Static Regeneration)** — páginas de imóveis revalidam a cada 60s
 - **Otimização de imagens** — `next/image` com lazy loading, formato moderno, CDN Sanity
 
 ### CMS (Sanity Studio `/studio`)
 
-Todo o conteúdo do site é gerenciado pela corretora diretamente no Studio, sem tocar em código.
+Todo o conteúdo do site é gerenciado pelo corretor diretamente no Studio, sem tocar em código.
 
 #### Tipo `imovel`
 | Campo | Descrição |
@@ -78,17 +78,17 @@ Todo o conteúdo do site é gerenciado pela corretora diretamente no Studio, sem
 ## Estrutura de Arquivos
 
 ```
-manuela-rezende/
+site-corretor/
 ├── sanity/
 │   └── schemaTypes/
 │       ├── index.ts               # Registro dos schemas
 │       ├── imovel.ts              # Schema do imóvel
-│       └── corretora.ts           # Schema do perfil da corretora + textos do site
+│       └── corretora.ts           # Schema do perfil do corretor + textos do site
 ├── sanity.config.ts               # Configuração do Sanity Studio
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx             # Layout global (Header, Footer, WhatsAppButton, metadataBase)
-│   │   ├── opengraph-image.tsx    # Imagem OG padrão 1200×630 (foto da corretora + branding)
+│   │   ├── opengraph-image.tsx    # Imagem OG padrão 1200×630 (foto do corretor + branding)
 │   │   ├── page.tsx               # Homepage (fetch imoveis + corretora, textos do CMS)
 │   │   ├── vendas/
 │   │   │   └── page.tsx           # Listagem de imóveis
@@ -117,10 +117,10 @@ manuela-rezende/
 │           ├── image.ts           # Helper urlFor() para imagens
 │           └── queries.ts         # Queries GROQ (imoveis, corretora)
 ├── public/
-│   └── manuela-rezende.png        # Foto da Manuela (hero + OG image)
+│   └── corretor.png               # Foto do corretor (hero + OG image)
 ├── scripts/
 │   ├── seed-sanity.mjs            # Seed do imóvel inicial (com upload de fotos)
-│   └── seed-corretora.mjs         # Seed do documento corretora (criar uma vez)
+│   └── seed-corretora.mjs         # Seed do documento corretora (executar uma vez)
 └── next.config.ts                 # Config Next.js (remotePatterns, serverExternalPackages)
 ```
 
@@ -130,13 +130,13 @@ manuela-rezende/
 
 ### Pré-requisitos
 - Node.js 18+
-- Conta Sanity com acesso ao projeto `ks20n411`
+- Conta Sanity com acesso ao projeto (ver `NEXT_PUBLIC_SANITY_PROJECT_ID`)
 
 ### Instalação
 
 ```bash
-git clone https://github.com/vitorcoelhof/manuela-rezende.git
-cd manuela-rezende
+git clone <url-do-repositorio>
+cd <nome-do-projeto>
 npm install
 cp .env.example .env.local
 # Preencher .env.local com os valores abaixo
@@ -145,7 +145,7 @@ cp .env.example .env.local
 ### Variáveis de Ambiente
 
 ```env
-NEXT_PUBLIC_SANITY_PROJECT_ID=ks20n411
+NEXT_PUBLIC_SANITY_PROJECT_ID=<project-id>
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2024-07-11
 SANITY_API_TOKEN=<token com permissão de escrita>
@@ -161,7 +161,7 @@ Abre em http://localhost:3000. Studio disponível em http://localhost:3000/studi
 
 ### Seed de Conteúdo
 
-Executar uma vez para criar o documento da corretora no Sanity:
+Executar uma vez para criar o documento do corretor no Sanity:
 
 ```bash
 node scripts/seed-corretora.mjs
@@ -196,13 +196,13 @@ Configurar em Settings → Environment Variables:
 ### CORS no Sanity
 
 Para o Studio funcionar em produção, adicionar em [manage.sanity.io](https://manage.sanity.io) → API → CORS Origins:
-- `https://manuela-rezende.vercel.app` (Allow credentials: ✓)
+- `https://<dominio-do-projeto>.vercel.app` (Allow credentials: ✓)
 
 ---
 
 ## Replicar para Outro Corretor
 
-O projeto foi desenvolvido como template reutilizável. Para usar em outro projeto:
+O projeto foi desenvolvido como template reutilizável. Para usar em novo projeto:
 
 1. **Criar novo projeto Sanity** em manage.sanity.io → novo `projectId`
 2. **Criar novo repositório** no GitHub (fork ou novo repo)
@@ -210,7 +210,7 @@ O projeto foi desenvolvido como template reutilizável. Para usar em outro proje
 4. **Atualizar variáveis de ambiente** com o novo `projectId` e token
 5. **Atualizar dados fixos no código:**
    - `src/app/layout.tsx` — número WhatsApp do botão flutuante
-   - `src/app/opengraph-image.tsx` — URL da foto para a imagem OG
+   - `src/app/opengraph-image.tsx` — URL da foto do corretor para a imagem OG
    - `public/` — foto do corretor
 6. **Executar seeds** para criar os documentos iniciais no Sanity
 7. **Editar conteúdo no Studio** — todos os textos, WhatsApp, Instagram, localização
