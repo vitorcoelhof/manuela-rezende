@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { IMOVEIS_QUERY } from '@/sanity/lib/queries'
 import ImovelGrid from '@/components/ImovelGrid'
+import ConsultaForm from '@/components/ConsultaForm'
 
 export const revalidate = 60
 
@@ -41,6 +42,11 @@ export default async function VendasPage({ searchParams }: VendasPageProps) {
       </section>
 
       <ImovelGrid imoveis={imoveis} initialTipo={params.tipo || ''} initialFaixa={params.faixa || ''} />
+
+      {/* Consulta form for people who didn't find their property */}
+      <section className="bg-[#f9f9f9] border-t border-[#e5e5e5]">
+        <ConsultaForm />
+      </section>
     </>
   )
 }
