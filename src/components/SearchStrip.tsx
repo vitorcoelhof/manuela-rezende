@@ -34,7 +34,7 @@ export default function SearchStrip() {
   return (
     <section className="bg-[#111111]">
       <div className="mx-auto max-w-6xl px-6 lg:px-8 py-4">
-        <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-start flex-wrap">
+        <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-center flex-wrap">
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#b8976a] font-medium shrink-0 sm:mr-2 hidden sm:block">
             Busca Rápida
           </p>
