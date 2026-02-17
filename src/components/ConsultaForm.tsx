@@ -67,7 +67,7 @@ export default function ConsultaForm() {
       <div className="w-full max-w-2xl mx-auto px-4 py-8">
         <button
           onClick={() => setShowForm(true)}
-          className="w-full bg-gradient-to-r from-[#b8976a] to-[#d4af8f] text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition"
+          className="w-full bg-[#111111] hover:bg-[#222222] text-white font-bold py-3 px-6 rounded-lg transition"
         >
           Não encontrou seu imóvel? Envie sua necessidade
         </button>
@@ -192,7 +192,7 @@ export default function ConsultaForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#b8976a] to-[#d4af8f] text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#111111] hover:bg-[#222222] text-white font-bold py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Enviando...' : 'Enviar via WhatsApp'}
           </button>
