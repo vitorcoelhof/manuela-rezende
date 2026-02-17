@@ -4,8 +4,6 @@ import { useState, FormEvent } from 'react'
 
 interface FormData {
   nome: string
-  email: string
-  telefone: string
   tipo: string
   localizacao: string
   orcamento: string
@@ -15,8 +13,6 @@ interface FormData {
 export default function ConsultaForm() {
   const [formData, setFormData] = useState<FormData>({
     nome: '',
-    email: '',
-    telefone: '',
     tipo: '',
     localizacao: '',
     orcamento: '',
@@ -93,14 +89,14 @@ export default function ConsultaForm() {
         </div>
 
         <p className="text-gray-600 mb-6">
-          Não encontrou o imóvel que procura? Preencha o formulário abaixo e nossa corretora entrará em contato via WhatsApp com as melhores opções para você.
+          Não encontrou o imóvel que procura? Preencha rapidamente e envie via seu WhatsApp. Nossa corretora responderá com as melhores opções para você.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Nome */}
           <div>
             <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-1">
-              Nome completo *
+              Seu nome *
             </label>
             <input
               type="text"
@@ -110,41 +106,7 @@ export default function ConsultaForm() {
               onChange={handleChange}
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8976a] focus:border-transparent outline-none transition"
-              placeholder="Seu nome"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email *
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8976a] focus:border-transparent outline-none transition"
-              placeholder="seu@email.com"
-            />
-          </div>
-
-          {/* Telefone */}
-          <div>
-            <label htmlFor="telefone" className="block text-sm font-medium text-gray-700 mb-1">
-              Telefone/WhatsApp *
-            </label>
-            <input
-              type="tel"
-              id="telefone"
-              name="telefone"
-              value={formData.telefone}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8976a] focus:border-transparent outline-none transition"
-              placeholder="(11) 99999-9999"
+              placeholder="João Silva"
             />
           </div>
 
@@ -236,7 +198,7 @@ export default function ConsultaForm() {
           </button>
 
           <p className="text-xs text-gray-500 text-center">
-            * Campos obrigatórios. Seus dados serão usados apenas para contato.
+            * Campos obrigatórios
           </p>
         </form>
       </div>

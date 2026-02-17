@@ -1,24 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { client } from '@/sanity/lib/client'
+import { createClient } from 'next-sanity'
+import { client as readClient } from '@/sanity/lib/client'
+
+// Create authenticated client for mutations
+const authClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
+  token: process.env.SANITY_API_TOKEN,
+  useCdn: false,
+})
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
     // Validate required fields
-    const { nome, email, telefone, tipo } = body
-    if (!nome || !email || !telefone || !tipo) {
+    const { nome, tipo } = body
+    if (!nome || !tipo) {
       return NextResponse.json(
-        { error: 'Missing required fields: nome, email, telefone, tipo' },
-        { status: 400 }
-      )
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: 'Invalid email format' },
+        { error: 'Missing required fields: nome, tipo' },
         { status: 400 }
       )
     }
@@ -32,12 +33,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Save consulta to Sanity
-    const consulta = await client.create({
+    // Save consulta to Sanity using authenticated client
+    const consulta = await authClient.create({
       _type: 'consulta',
       nome,
-      email,
-      telefone,
       tipo,
       localizacao: body.localizacao || undefined,
       orcamento: body.orcamento || undefined,
@@ -46,8 +45,8 @@ export async function POST(request: NextRequest) {
       contatado: false,
     })
 
-    // Get broker WhatsApp number
-    const corretora = await client.fetch(`*[_type == "corretora"][0] { whatsapp }`)
+    // Get broker WhatsApp number (can use read-only client for queries)
+    const corretora = await readClient.fetch(`*[_type == "corretora"][0] { whatsapp }`)
     const whatsappNumber = corretora?.whatsapp
 
     if (!whatsappNumber) {
@@ -70,18 +69,12 @@ export async function POST(request: NextRequest) {
     const message = `
 *Nova Consulta de Imóvel*
 
-*Dados do Cliente:*
-• Nome: ${nome}
-• Email: ${email}
-• Telefone: ${telefone}
+*Nome:* ${nome}
 
-*Detalhes da Busca:*
-• Tipo de Imóvel: ${tiposNomes[tipo]}
-${body.localizacao ? `• Localização: ${body.localizacao}` : ''}
-${body.orcamento ? `• Orçamento: ${body.orcamento}` : ''}
-${body.descricao ? `• Descrição: ${body.descricao}` : ''}
-
-Responda a este contato para acompanhar.
+*Tipo de Imóvel:* ${tiposNomes[tipo]}
+${body.localizacao ? `*Localização:* ${body.localizacao}` : ''}
+${body.orcamento ? `*Orçamento:* ${body.orcamento}` : ''}
+${body.descricao ? `*Detalhes:* ${body.descricao}` : ''}
     `.trim()
 
     // Format WhatsApp number (remove non-digits, add country code if needed)
