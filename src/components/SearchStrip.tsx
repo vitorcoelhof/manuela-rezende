@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 
 const TIPOS = [
   { value: '', label: 'Tipo' },
-  { value: 'casa', label: 'Casa' },
   { value: 'apartamento', label: 'Apartamento' },
+  { value: 'casa', label: 'Casa' },
   { value: 'studio', label: 'Studio' },
   { value: 'terreno', label: 'Terreno' },
 ]
@@ -33,8 +33,8 @@ export default function SearchStrip() {
 
   return (
     <section className="bg-[#111111]">
-      <div className="mx-auto max-w-6xl px-6 lg:px-8 py-6">
-        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8 py-4">
+        <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-start flex-wrap">
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#b8976a] font-medium shrink-0 sm:mr-2 hidden sm:block">
             Busca Rápida
           </p>
@@ -42,7 +42,7 @@ export default function SearchStrip() {
           <select
             value={tipo}
             onChange={(e) => setTipo(e.target.value)}
-            className="flex-1 px-4 py-3 bg-white/10 border border-white/20 text-white text-[13px] focus:outline-none focus:border-white/50 transition-colors appearance-none"
+            className="px-3 py-2 bg-white/10 border border-white/20 text-white text-[12px] focus:outline-none focus:border-white/50 transition-colors appearance-none shrink-0"
           >
             {TIPOS.map((t) => (
               <option key={t.value} value={t.value} className="bg-[#111111]">{t.label}</option>
@@ -52,7 +52,7 @@ export default function SearchStrip() {
           <select
             value={faixa}
             onChange={(e) => setFaixa(e.target.value)}
-            className="flex-1 px-4 py-3 bg-white/10 border border-white/20 text-white text-[13px] focus:outline-none focus:border-white/50 transition-colors appearance-none"
+            className="px-3 py-2 bg-white/10 border border-white/20 text-white text-[12px] focus:outline-none focus:border-white/50 transition-colors appearance-none shrink-0"
           >
             {FAIXAS.map((f) => (
               <option key={f.value} value={f.value} className="bg-[#111111]">{f.label}</option>
@@ -61,7 +61,7 @@ export default function SearchStrip() {
 
           <button
             onClick={handleSearch}
-            className="px-8 py-3 bg-white text-[#111111] text-[12px] font-semibold tracking-[0.15em] uppercase hover:bg-[#f5f5f5] transition-colors shrink-0"
+            className="px-6 py-2 bg-white text-[#111111] text-[11px] font-semibold tracking-[0.15em] uppercase hover:bg-[#f5f5f5] transition-colors shrink-0"
           >
             Buscar
           </button>

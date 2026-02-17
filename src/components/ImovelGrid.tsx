@@ -29,11 +29,11 @@ interface ImovelGridProps {
 
 const TIPOS = [
   { value: '', label: 'Todos os tipos' },
-  { value: 'casa', label: 'Casa' },
   { value: 'apartamento', label: 'Apartamento' },
+  { value: 'casa', label: 'Casa' },
+  { value: 'comercial', label: 'Comercial' },
   { value: 'studio', label: 'Studio' },
   { value: 'terreno', label: 'Terreno' },
-  { value: 'comercial', label: 'Comercial' },
 ]
 
 const FAIXAS = [
