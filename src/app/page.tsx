@@ -56,21 +56,21 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="bg-[#111111] text-white overflow-hidden">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center md:items-stretch gap-0">
-            {/* Manuela photo - mobile version (appears before text on mobile) */}
-            <div className="md:hidden mb-6 w-40 h-48 relative flex-shrink-0">
+          <div className="flex flex-col md:flex-row items-center md:items-stretch gap-0 relative">
+            {/* Manuela photo - mobile version (floating on right side) */}
+            <div className="md:hidden absolute top-0 right-0 w-48 h-56 pointer-events-none opacity-80">
               <Image
-                src="/manuela-rezende.png"
+                src="/fotos/manuela_rezenda_corretora_transparente.png"
                 alt="Manuela Rezende — Corretora de Imóveis"
                 fill
-                className="object-cover object-top"
+                className="object-contain object-top"
                 priority
-                sizes="160px"
+                sizes="192px"
               />
             </div>
 
             {/* Text content */}
-            <div className="flex-1 py-24 md:py-36 md:pr-12 text-center md:text-left">
+            <div className="flex-1 py-24 md:py-36 md:pr-12 text-center md:text-left relative z-10">
               <p className="text-[11px] tracking-[0.25em] uppercase text-[#b8976a] font-medium mb-6">
                 Corretora de Imóveis
               </p>
@@ -99,15 +99,13 @@ export default async function HomePage() {
             {/* Manuela photo - desktop version (large) */}
             <div className="hidden md:flex flex-shrink-0 w-[340px] lg:w-[400px] relative self-stretch">
               <Image
-                src="/manuela-rezende.png"
+                src="/fotos/manuela_rezenda_corretora_transparente.png"
                 alt="Manuela Rezende — Corretora de Imóveis"
                 fill
-                className="object-cover object-top"
+                className="object-contain object-center"
                 priority
                 sizes="400px"
               />
-              {/* Fade gradient on left edge to blend with dark bg */}
-              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#111111] to-transparent" />
             </div>
           </div>
         </div>
