@@ -49,7 +49,7 @@ Template de site institucional para corretor de imóveis. Desenvolvido com Next.
 - **SEO + Open Graph** — `title`, `description` e imagem OG individuais por página; imagem padrão com foto do corretor gerada dinamicamente (1200×630)
 - **ISR (Incremental Static Regeneration)** — páginas de imóveis revalidam a cada 60s
 - **Otimização de imagens** — `next/image` com lazy loading, formato moderno, CDN Sanity
-- **Mapa Interativo** — localização do imóvel em mapa OpenStreetMap + Leaflet na página de detalhe (campo opcional no CMS, 100% gratuito)
+- **Mapa Interativo** — localização do imóvel em mapa OpenStreetMap + Leaflet na página de detalhe (campo opcional no CMS, 100% gratuito, autocompleta com ViaCEP)
 
 ### CMS (Sanity Studio `/studio`)
 
@@ -67,7 +67,7 @@ Todo o conteúdo do site é gerenciado pelo corretor diretamente no Studio, sem 
 | Galeria de Fotos | Upload múltiplo (Ctrl/⌘ para selecionar vários arquivos), layout grid, drag para reordenar |
 | Descrição | Texto rich-text |
 | Destaque | Booleano |
-| CEP | CEP do imóvel (opcional) — ex: 88015-902; converte automaticamente para coordenadas e exibe mapa na página de detalhes |
+| CEP | CEP do imóvel (opcional) — aceita formato `88015-902` ou `88015902`; converte automaticamente para coordenadas e exibe mapa interativo na página de detalhes (100% gratuito) |
 
 #### Tipo `corretora` (singleton — 3 grupos)
 
@@ -78,6 +78,32 @@ Todo o conteúdo do site é gerenciado pelo corretor diretamente no Studio, sem 
 **Contato** — WhatsApp, Instagram, localização e complemento de localização
 
 > Alterações salvas no Studio aparecem no site em até 60 segundos.
+
+### 🗺️ Como Usar o Campo CEP para Mapas
+
+O campo CEP na página de detalhes do imóvel funciona de forma automática:
+
+1. **Adicionar CEP no Studio**
+   - Acesse o imóvel em `/studio`
+   - Preencha o campo "CEP" com formato `88015-902` ou `88015902`
+   - Salve o documento
+
+2. **Fluxo de Geocodificação (automático)**
+   - **Passo 1**: ViaCEP API converte CEP → endereço completo (com rua, cidade, estado)
+   - **Passo 2**: Nominatim API geocodifica endereço → latitude/longitude
+   - **Passo 3**: Leaflet renderiza mapa OpenStreetMap com marcador no local
+
+3. **Resultado na Página**
+   - Mapa interativo aparece na seção "Localização" da página de detalhes
+   - Zoom nível 16 (rua)
+   - Marcador com popup exibindo o título do imóvel
+   - Funciona offline após carregamento (tiles armazenados em cache)
+
+**Tecnologias (100% Gratuitas):**
+- **ViaCEP** — API brasileira para conversão CEP → endereço
+- **Nominatim** — API do OpenStreetMap para geocodificação
+- **Leaflet** — biblioteca JavaScript para mapas interativos
+- **OpenStreetMap** — tiles de mapa gratuitos
 
 ---
 
@@ -100,7 +126,8 @@ site-corretor/
 │   │   │   └── page.tsx           # Listagem de imóveis
 │   │   ├── imoveis/[slug]/
 │   │   │   ├── page.tsx           # Página individual do imóvel
-│   │   │   └── GalleryClient.tsx  # Galeria interativa (client component)
+│   │   │   ├── GalleryClient.tsx  # Galeria interativa (client component)
+│   │   │   └── MapClient.tsx      # Mapa Leaflet com geocodificação ViaCEP + Nominatim
 │   │   ├── a-corretora/
 │   │   │   └── page.tsx           # Página "A Corretora"
 │   │   ├── contato/
@@ -209,7 +236,11 @@ Para o Studio funcionar em produção, adicionar em [manage.sanity.io](https://m
 ## Melhorias Recentes
 
 ### v2.1
-- ✅ **Mapa OpenStreetMap** — localização do imóvel com mapa interativo Leaflet + OpenStreetMap na página de detalhes (100% gratuito, campo opcional no CMS)
+- ✅ **Mapa OpenStreetMap com CEP** — localização do imóvel com mapa interativo Leaflet + OpenStreetMap na página de detalhes
+  - Campo CEP opcional no Sanity Studio (formato: `88015-902` ou `88015902`)
+  - Geocodificação automática: ViaCEP (CEP → endereço) + Nominatim (endereço → coordenadas)
+  - Mapa renderizado com zoom 16, marcador interativo, tiles em cache
+  - 100% gratuito (sem Google Maps, sem custos de API)
 
 ### v2.0
 - ✅ **Search Strip Otimizado** — título "Encontre seu imóvel" em bold, filtros lado a lado, ícone de lupa
@@ -249,3 +280,8 @@ O projeto foi desenvolvido como template reutilizável. Para usar em novo projet
 - **`fotoCapa` dedicada** — campo separado para capa dos cards; query usa `coalesce(fotoCapa, fotos[0])` como fallback.
 - **`opengraph-image.tsx`** — imagem OG gerada dinamicamente via `ImageResponse` (edge runtime), sem arquivo estático adicional.
 - **Status `pausado`** — imóvel fica editável no Studio mas invisível no site (query filtra apenas `status == "venda"`).
+- **Mapa com Geocodificação em 2 Passos**
+  - ViaCEP → converte CEP para endereço completo (melhor cobertura brasileira)
+  - Nominatim → geocodifica endereço para coordenadas
+  - Fallback de erro com mensagens claras ao usuário
+  - CSP configurado para permitir `https://viacep.com.br` e `https://nominatim.openstreetmap.org`
