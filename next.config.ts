@@ -42,7 +42,7 @@ const nextConfig: NextConfig = {
           // Content Security Policy - restrict resources to same origin + Sanity CDN for images
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; img-src 'self' https://cdn.sanity.io https://tile.openstreetmap.org data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://*.sanity.io https://www.google-analytics.com https://wa.me https://nominatim.openstreetmap.org;",
+            value: "default-src 'self'; img-src 'self' https://cdn.sanity.io https://tile.openstreetmap.org https://unpkg.com data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://*.sanity.io https://www.google-analytics.com https://wa.me https://nominatim.openstreetmap.org;",
           },
           // Force HTTPS
           {
