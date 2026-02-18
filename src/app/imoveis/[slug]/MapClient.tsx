@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
+import dynamic from 'next/dynamic'
 
 interface MapClientProps {
   cep: string
@@ -14,9 +13,26 @@ interface Coordenadas {
   lng: number
 }
 
+// Dynamic import to avoid window is not defined error
+let L: any = null
+
+const loadLeaflet = async () => {
+  if (typeof window !== 'undefined' && !L) {
+    const leaflet = await import('leaflet')
+    L = leaflet.default
+    await import('leaflet/dist/leaflet.css')
+  }
+  return L
+}
+
 export default function MapClient({ cep, titulo }: MapClientProps) {
   const [coordenadas, setCoordenadas] = useState<Coordenadas | null>(null)
   const [erro, setErro] = useState<string | null>(null)
+  const [leafletReady, setLeafletReady] = useState(false)
+
+  useEffect(() => {
+    loadLeaflet().then(() => setLeafletReady(true))
+  }, [])
 
   useEffect(() => {
     // Buscar coordenadas via Nominatim (OpenStreetMap)
@@ -70,33 +86,38 @@ export default function MapClient({ cep, titulo }: MapClientProps) {
   }, [cep])
 
   useEffect(() => {
-    if (!coordenadas) return
+    if (!coordenadas || !leafletReady || !L) return
 
     const mapContainer = document.getElementById('map')
     if (!mapContainer) return
 
-    // Create map
-    const map = L.map('map').setView([coordenadas.lat, coordenadas.lng], 16)
+    try {
+      // Create map
+      const map = L.map('map').setView([coordenadas.lat, coordenadas.lng], 16)
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-      maxZoom: 19,
-    }).addTo(map)
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+      }).addTo(map)
 
-    // Add marker
-    L.marker([coordenadas.lat, coordenadas.lng])
-      .bindPopup(titulo)
-      .addTo(map)
-      .openPopup()
+      // Add marker
+      L.marker([coordenadas.lat, coordenadas.lng])
+        .bindPopup(titulo)
+        .addTo(map)
+        .openPopup()
 
-    // Fix map height
-    map.invalidateSize()
+      // Fix map height
+      map.invalidateSize()
 
-    return () => {
-      map.remove()
+      return () => {
+        map.remove()
+      }
+    } catch (err) {
+      console.error('Erro ao criar mapa:', err)
+      setErro('Erro ao exibir mapa')
     }
-  }, [coordenadas, titulo])
+  }, [coordenadas, titulo, leafletReady])
 
   if (erro) {
     return (
