@@ -153,6 +153,41 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Quem Atende Você - mobile only */}
+      <section className="md:hidden bg-[#f5f5f5] border-t border-[#e5e5e5]">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8 py-12">
+          <div className="flex flex-col items-center text-center">
+            {/* Photo */}
+            <div className="w-24 h-24 relative mb-4 rounded-full overflow-hidden ring-2 ring-[#b8976a]">
+              <Image
+                src="/manuela-rezende.png"
+                alt="Manuela Rezende"
+                fill
+                className="object-cover object-top"
+                sizes="96px"
+              />
+            </div>
+            {/* Label */}
+            <p className="text-[11px] tracking-[0.25em] uppercase text-[#b8976a] font-medium mb-2">
+              Quem Atende Você
+            </p>
+            {/* Name */}
+            <h3 className="text-[18px] font-semibold text-[#111111] mb-1">Manuela Rezende</h3>
+            {/* Title */}
+            <p className="text-[12px] text-[#999999] mb-6">Corretora de Imóveis</p>
+            {/* CTA */}
+            <a
+              href={`https://wa.me/5548999770241?text=${encodeURIComponent('Olá Manuela, gostaria de conhecer mais sobre os imóveis disponíveis')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-8 py-3.5 bg-[#25d366] text-white text-[13px] font-semibold tracking-wide uppercase hover:bg-[#1ebe5d] transition-colors"
+            >
+              Falar pelo WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* CTA strip */}
       <section className="bg-[#f5f5f5] border-t border-[#e5e5e5]">
         <div className="mx-auto max-w-6xl px-6 lg:px-8 py-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
