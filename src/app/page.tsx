@@ -56,50 +56,9 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="bg-[#111111] text-white overflow-hidden">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          {/* Mobile: Full background image with text overlay */}
-          <div className="md:hidden relative w-screen -mx-6 mb-0">
-            <div className="relative w-full h-[600px]">
-              <Image
-                src="/manuela-rezenda-transparente.png"
-                alt="Manuela Rezende — Corretora de Imóveis"
-                fill
-                className="object-cover object-center"
-                priority
-                sizes="100vw"
-              />
-              {/* Text overlay on mobile */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center px-6">
-                <p className="text-[11px] tracking-[0.25em] uppercase text-white font-medium mb-6">
-                  Corretora de Imóveis
-                </p>
-                <h1 className="text-3xl font-light tracking-tight leading-tight text-center text-white mb-6">
-                  Encontre o imóvel certo com quem entende do mercado.
-                </h1>
-                <p className="text-[15px] text-white text-center max-w-xs leading-relaxed mb-10">
-                  Atendimento personalizado, seleção de imóveis residenciais e contato direto pelo WhatsApp.
-                </p>
-                <div className="flex flex-col gap-3 w-full">
-                  <Link
-                    href="/vendas"
-                    className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#111111] text-[13px] font-semibold tracking-wide uppercase hover:bg-[#f5f5f5] transition-colors"
-                  >
-                    Ver Imóveis
-                  </Link>
-                  <Link
-                    href="/contato"
-                    className="inline-flex items-center justify-center px-8 py-3.5 border border-white/30 text-white text-[13px] font-semibold tracking-wide uppercase hover:border-white/60 transition-colors"
-                  >
-                    Falar com a Manuela
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Desktop layout */}
-          <div className="hidden md:flex flex-col md:flex-row items-center md:items-stretch gap-0 relative">
-            {/* Text content - Desktop only */}
-            <div className="flex-1 py-24 md:py-36 md:pr-12 text-center md:text-left relative z-10">
+          <div className="flex flex-col md:flex-row items-center md:items-stretch gap-0">
+            {/* Text content */}
+            <div className="flex-1 py-24 md:py-36 md:pr-12">
               <p className="text-[11px] tracking-[0.25em] uppercase text-[#b8976a] font-medium mb-6">
                 Corretora de Imóveis
               </p>
@@ -126,7 +85,7 @@ export default async function HomePage() {
             </div>
 
             {/* Manuela photo - desktop version (large) */}
-            <div className="flex-shrink-0 w-[340px] lg:w-[400px] relative self-stretch">
+            <div className="hidden md:flex flex-shrink-0 w-[340px] lg:w-[400px] relative self-stretch">
               <Image
                 src="/manuela-rezenda-transparente.png"
                 alt="Manuela Rezende — Corretora de Imóveis"

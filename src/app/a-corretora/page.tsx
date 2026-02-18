@@ -87,6 +87,23 @@ export default async function ACorretoraPage() {
         </div>
       </section>
 
+      {/* Photo section */}
+      <section className="bg-white border-t border-[#e5e5e5]">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8 py-12">
+          <div className="flex justify-center mb-12">
+            <div className="relative w-48 h-64 md:w-64 md:h-80">
+              <Image
+                src="/manuela-rezenda-transparente.png"
+                alt="Manuela Rezende — Corretora de Imóveis"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 192px, 256px"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Bio */}
       <section className="bg-white border-t border-[#e5e5e5]">
         <div className="mx-auto max-w-6xl px-6 lg:px-8 py-20">
