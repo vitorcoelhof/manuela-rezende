@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
+
+// Import CSS statically
+import 'leaflet/dist/leaflet.css'
 
 interface MapClientProps {
   cep: string
@@ -20,7 +22,6 @@ const loadLeaflet = async () => {
   if (typeof window !== 'undefined' && !L) {
     const leaflet = await import('leaflet')
     L = leaflet.default
-    await import('leaflet/dist/leaflet.css')
   }
   return L
 }
