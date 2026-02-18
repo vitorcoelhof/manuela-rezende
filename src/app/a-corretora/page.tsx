@@ -95,7 +95,7 @@ export default async function ACorretoraPage() {
               Sobre Mim
             </p>
             {corretora?.bio ? (
-              <div className="space-y-4 text-[15px] text-[#444444] leading-relaxed">
+              <div className="space-y-4 text-[15px] text-[#444444] leading-relaxed text-justify">
                 {corretora.bio.map((block: { _key: string; children?: Array<{ _key: string; text: string }> }, i: number) => (
                   <p key={block._key || i}>
                     {block.children?.map((child) => child.text).join('')}
@@ -103,7 +103,7 @@ export default async function ACorretoraPage() {
                 ))}
               </div>
             ) : (
-              <div className="space-y-4 text-[15px] text-[#444444] leading-relaxed">
+              <div className="space-y-4 text-[15px] text-[#444444] leading-relaxed text-justify">
                 <p>
                   Sou corretora de imóveis atuando em Florianópolis com foco em imóveis residenciais.
                   Minha missão é simplificar um dos momentos mais importantes da sua vida — a compra ou

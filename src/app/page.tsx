@@ -56,7 +56,7 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="bg-[#111111] text-white overflow-hidden">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center md:items-stretch gap-0">
+          <div className="flex flex-col md:flex-row items-start md:items-stretch gap-6 md:gap-0">
             {/* Text content */}
             <div className="flex-1 py-24 md:py-36 md:pr-12">
               <p className="text-[11px] tracking-[0.25em] uppercase text-[#b8976a] font-medium mb-6">
@@ -84,7 +84,19 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Manuela photo */}
+            {/* Manuela photo - mobile version (small) */}
+            <div className="md:hidden flex-shrink-0 w-32 h-40 relative">
+              <Image
+                src="/manuela-rezende.png"
+                alt="Manuela Rezende — Corretora de Imóveis"
+                fill
+                className="object-cover object-top rounded"
+                priority
+                sizes="128px"
+              />
+            </div>
+
+            {/* Manuela photo - desktop version (large) */}
             <div className="hidden md:flex flex-shrink-0 w-[340px] lg:w-[400px] relative self-stretch">
               <Image
                 src="/manuela-rezende.png"
