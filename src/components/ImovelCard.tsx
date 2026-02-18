@@ -83,12 +83,12 @@ export default function ImovelCard({ imovel }: ImovelCardProps) {
         <p className="mt-2 text-[18px] font-light text-[#111111]">{formatPreco(preco)}</p>
 
         {/* Specs */}
-        {(area || quartos || banheiros || (vagas && vagas > 0)) && (
+        {(area || quartos || banheiros || typeof vagas === 'number') && (
           <div className="mt-3 flex flex-wrap gap-3 text-[12px] text-[#666666]">
             {area && <span>{area} m²</span>}
             {quartos && <span>{quartos} {quartos === 1 ? 'quarto' : 'quartos'}</span>}
             {banheiros && <span>{banheiros} {banheiros === 1 ? 'banheiro' : 'banheiros'}</span>}
-            {vagas && vagas > 0 && <span>{vagas} {vagas === 1 ? 'vaga' : 'vagas'}</span>}
+            {typeof vagas === 'number' && <span>{vagas} {vagas === 1 ? 'vaga' : 'vagas'}</span>}
           </div>
         )}
 
