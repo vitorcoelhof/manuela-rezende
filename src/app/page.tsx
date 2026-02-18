@@ -60,7 +60,7 @@ export default async function HomePage() {
             {/* Manuela photo - mobile version (floating on right side) */}
             <div className="md:hidden absolute top-0 right-0 w-48 h-56 pointer-events-none opacity-80">
               <Image
-                src="/fotos/manuela_rezenda_corretora_transparente.png"
+                src="/manuela-rezenda-transparente.png"
                 alt="Manuela Rezende — Corretora de Imóveis"
                 fill
                 className="object-contain object-top"
@@ -99,7 +99,7 @@ export default async function HomePage() {
             {/* Manuela photo - desktop version (large) */}
             <div className="hidden md:flex flex-shrink-0 w-[340px] lg:w-[400px] relative self-stretch">
               <Image
-                src="/fotos/manuela_rezenda_corretora_transparente.png"
+                src="/manuela-rezenda-transparente.png"
                 alt="Manuela Rezende — Corretora de Imóveis"
                 fill
                 className="object-contain object-center"
