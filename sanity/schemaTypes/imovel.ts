@@ -135,10 +135,10 @@ export const imovelType = defineType({
       initialValue: false,
     }),
     defineField({
-      name: 'localizacaoMapa',
-      title: 'Localização no Mapa',
-      type: 'geopoint',
-      description: 'Clique no mapa para definir a coordenada do imóvel. Campo opcional.',
+      name: 'cep',
+      title: 'CEP',
+      type: 'string',
+      description: 'Ex: 88015-902 — O mapa será gerado automaticamente usando o CEP.',
     }),
   ],
   preview: {

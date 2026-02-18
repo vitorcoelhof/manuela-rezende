@@ -61,7 +61,7 @@ export default async function ImovelPage({ params }: PageProps) {
 
   if (!imovel) notFound()
 
-  const { titulo, tipo, preco, localizacao, area, quartos, banheiros, vagas, descricao, fotos, localizacaoMapa } = imovel
+  const { titulo, tipo, preco, localizacao, area, quartos, banheiros, vagas, descricao, fotos, cep } = imovel
 
   const waMsg = encodeURIComponent(`Olá Manuela, tenho interesse no imóvel "${titulo}" (${localizacao}). Poderia me enviar mais informações?`)
   const waUrl = `https://wa.me/5548999770241?text=${waMsg}`
@@ -151,12 +151,12 @@ export default async function ImovelPage({ params }: PageProps) {
             )}
 
             {/* Map */}
-            {localizacaoMapa?.lat && localizacaoMapa?.lng && (
+            {cep && (
               <div className="mt-8">
                 <h2 className="text-[11px] tracking-[0.2em] uppercase text-[#b8976a] font-medium mb-4">
                   Localização
                 </h2>
-                <MapClient lat={localizacaoMapa.lat} lng={localizacaoMapa.lng} titulo={titulo} />
+                <MapClient cep={cep} titulo={titulo} />
               </div>
             )}
           </div>

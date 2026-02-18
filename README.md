@@ -67,7 +67,7 @@ Todo o conteúdo do site é gerenciado pelo corretor diretamente no Studio, sem 
 | Galeria de Fotos | Upload múltiplo (Ctrl/⌘ para selecionar vários arquivos), layout grid, drag para reordenar |
 | Descrição | Texto rich-text |
 | Destaque | Booleano |
-| Localização no Mapa | Coordenadas do imóvel (opcional) — clique no mapa no Studio para definir; exibe Google Maps na página de detalhes |
+| CEP | CEP do imóvel (opcional) — ex: 88015-902; converte automaticamente para coordenadas e exibe mapa na página de detalhes |
 
 #### Tipo `corretora` (singleton — 3 grupos)
 
