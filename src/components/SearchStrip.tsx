@@ -33,8 +33,13 @@ export default function SearchStrip() {
 
   return (
     <section className="bg-[#111111]">
-      <div className="mx-auto max-w-6xl px-6 lg:px-8 py-4">
-        <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-center flex-wrap">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8 py-6">
+        {/* Title - Mobile only */}
+        <h2 className="sm:hidden text-[18px] font-light text-white mb-4 tracking-tight">
+          Encontre seu imóvel
+        </h2>
+
+        <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-center">
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#b8976a] font-medium shrink-0 sm:mr-2 hidden sm:block">
             Busca Rápida
           </p>
@@ -61,9 +66,14 @@ export default function SearchStrip() {
 
           <button
             onClick={handleSearch}
-            className="px-6 py-2 bg-white text-[#111111] text-[11px] font-semibold tracking-[0.15em] uppercase hover:bg-[#f5f5f5] transition-colors shrink-0"
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-white text-[#111111] text-[11px] font-semibold tracking-[0.15em] uppercase hover:bg-[#f5f5f5] transition-colors shrink-0"
+            aria-label="Buscar imóveis"
           >
-            Buscar
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <span className="hidden sm:inline">Buscar</span>
           </button>
         </div>
       </div>
