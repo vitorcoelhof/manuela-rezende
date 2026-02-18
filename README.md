@@ -37,11 +37,15 @@ Template de site institucional para corretor de imóveis. Desenvolvido com Next.
 - **Design minimal luxury** — paleta escura (#111111) com dourado (#b8976a), tipografia com tracking largo
 - **Responsivo** — mobile-first, menu mobile com animação hamburger → X, layout adaptado para todos os tamanhos
 - **Imóveis na homepage** — cards de imóveis exibidos logo após a busca rápida (até 6, revalidados a cada 60s)
-- **Busca rápida na homepage** — filtros por tipo e faixa de preço que redirecionam para `/vendas`
+- **Busca rápida na homepage** — filtros por tipo e faixa de preço com ícone de lupa (mobile-first design compacto)
+- **Card Manuela mobile** — seção com foto, nome e CTA WhatsApp aparece no hero apenas em mobile
+- **Seção "Quem Atende Você"** — mobile-only, com foto circular da corretora e botão WhatsApp (hero e homepage)
+- **Instagram integrado** — banner mobile com @manuelarezendecorretora; ícone clicável no header desktop
 - **Listagem com filtros client-side** — tipo de imóvel, faixa de preço e busca por texto (sem reload de página)
 - **Galeria com lightbox** — miniaturas clicáveis, navegação por setas, contador de fotos
 - **WhatsApp flutuante** — botão fixo em todas as páginas (bottom-right)
 - **WhatsApp por imóvel** — cada card e página de imóvel tem botão com mensagem pré-formatada identificando o imóvel
+- **Display de vagas corrigido** — mostra "0 vagas" quando aplicável (antes estava oculto)
 - **SEO + Open Graph** — `title`, `description` e imagem OG individuais por página; imagem padrão com foto do corretor gerada dinamicamente (1200×630)
 - **ISR (Incremental Static Regeneration)** — páginas de imóveis revalidam a cada 60s
 - **Otimização de imagens** — `next/image` com lazy loading, formato moderno, CDN Sanity
@@ -104,12 +108,12 @@ site-corretor/
 │   │       ├── StudioClient.tsx   # NextStudio (client component)
 │   │       └── loading.tsx        # Loading state do Studio
 │   ├── components/
-│   │   ├── Header.tsx             # Navegação sticky com menu mobile funcional
+│   │   ├── Header.tsx             # Navegação sticky + Instagram icon desktop + mobile banner
 │   │   ├── Footer.tsx             # Rodapé com links e copyright
 │   │   ├── WhatsAppButton.tsx     # Botão flutuante do WhatsApp
-│   │   ├── ImovelCard.tsx         # Card de imóvel (foto, preço, specs, ações)
+│   │   ├── ImovelCard.tsx         # Card de imóvel (foto, preço, specs, ações, vagas fix)
 │   │   ├── ImovelGrid.tsx         # Grid com filtros client-side
-│   │   └── SearchStrip.tsx        # Busca rápida da homepage
+│   │   └── SearchStrip.tsx        # Busca rápida (título bold, ícone lupa, mobile compact)
 │   └── sanity/
 │       ├── env.ts                 # Variáveis de ambiente do Sanity
 │       └── lib/
@@ -197,6 +201,17 @@ Configurar em Settings → Environment Variables:
 
 Para o Studio funcionar em produção, adicionar em [manage.sanity.io](https://manage.sanity.io) → API → CORS Origins:
 - `https://<dominio-do-projeto>.vercel.app` (Allow credentials: ✓)
+
+---
+
+## Melhorias Recentes (v2.0)
+
+- ✅ **Search Strip Otimizado** — título "Encontre seu imóvel" em bold, filtros lado a lado, ícone de lupa
+- ✅ **Seção Mobile "Quem Atende Você"** — foto circular da corretora com CTA WhatsApp destacado
+- ✅ **Manuela Card no Hero** — mobile-only, com foto da corretora e botão WhatsApp no header
+- ✅ **Instagram Header** — ícone clicável ao lado do logo (desktop); banner no topo (mobile)
+- ✅ **Vagas Display Fix** — mostra corretamente "0 vagas" em cards e página de detalhes
+- ✅ **Estrutura Mobile-First** — layout totalmente otimizado para mobile com componentes responsivos
 
 ---
 
