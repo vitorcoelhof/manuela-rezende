@@ -19,17 +19,33 @@ export default function MapClient({ cep, titulo }: MapClientProps) {
   const [erro, setErro] = useState<string | null>(null)
 
   useEffect(() => {
-    // Buscar coordenadas via ViaCEP
+    // Buscar coordenadas via Nominatim (OpenStreetMap)
     const buscarCoordenadas = async () => {
       try {
         const cepLimpo = cep.replace(/\D/g, '') // Remove caracteres não-numéricos
         if (cepLimpo.length !== 8) {
           setErro('CEP inválido')
+          console.error('CEP inválido:', cep)
           return
         }
 
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?postalcode=${cepLimpo}&country=BR&format=json`)
+        console.log('Buscando coordenadas para CEP:', cepLimpo)
+
+        const url = `https://nominatim.openstreetmap.org/search?postalcode=${cepLimpo}&country=Brazil&format=json&limit=1`
+        console.log('URL:', url)
+
+        const response = await fetch(url, {
+          headers: {
+            'Accept': 'application/json'
+          }
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
         const data = await response.json()
+        console.log('Resposta Nominatim:', data)
 
         if (data.length > 0) {
           setCoordenadas({
@@ -37,16 +53,20 @@ export default function MapClient({ cep, titulo }: MapClientProps) {
             lng: parseFloat(data[0].lon),
           })
           setErro(null)
+          console.log('Coordenadas encontradas:', data[0].lat, data[0].lon)
         } else {
-          setErro('CEP não encontrado')
+          setErro('CEP não encontrado. Tente usar o endereço no lugar do CEP.')
+          console.warn('Nenhum resultado para CEP:', cepLimpo)
         }
       } catch (err) {
-        setErro('Erro ao buscar localização')
-        console.error(err)
+        setErro('Erro ao buscar localização. Verifique sua conexão.')
+        console.error('Erro ao buscar localização:', err)
       }
     }
 
-    buscarCoordenadas()
+    if (cep) {
+      buscarCoordenadas()
+    }
   }, [cep])
 
   useEffect(() => {
