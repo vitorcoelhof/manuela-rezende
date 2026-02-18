@@ -49,7 +49,7 @@ export default function MapClient({ cep, titulo }: MapClientProps) {
       try {
         const cepLimpo = cep.replace(/\D/g, '') // Remove caracteres não-numéricos
         if (cepLimpo.length !== 8) {
-          setErro('CEP inválido')
+          setErro('CEP inválido. Use o formato 88015-902 ou 88015902')
           console.error('CEP inválido:', cep)
           return
         }

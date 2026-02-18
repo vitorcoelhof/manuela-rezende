@@ -138,7 +138,13 @@ export const imovelType = defineType({
       name: 'cep',
       title: 'CEP',
       type: 'string',
-      description: 'Ex: 88015-902 — O mapa será gerado automaticamente usando o CEP.',
+      description: 'Ex: 88015-902 ou 88015902 — O mapa será gerado automaticamente usando o CEP.',
+      validation: (rule) =>
+        rule.custom((value) => {
+          if (!value) return true // Campo opcional
+          const cepRegex = /^\d{5}-?\d{3}$/
+          return cepRegex.test(value) ? true : 'CEP inválido. Use o formato 88015-902 ou 88015902'
+        }),
     }),
   ],
   preview: {
