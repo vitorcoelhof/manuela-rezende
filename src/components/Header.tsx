@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
-  const instagram = 'manuelarezendeimoveis'
+  const instagram = 'manuelarezendecorretora'
 
   return (
     <>
