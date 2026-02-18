@@ -104,7 +104,7 @@ export default async function ImovelPage({ params }: PageProps) {
             </div>
 
             {/* Specs */}
-            {(area || quartos || banheiros || vagas) && (
+            {(area || quartos || banheiros || typeof vagas === 'number') && (
               <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {area && (
                   <div className="border border-[#e5e5e5] p-4 text-center">
@@ -124,7 +124,7 @@ export default async function ImovelPage({ params }: PageProps) {
                     <p className="text-[11px] tracking-widest uppercase text-[#999999] mt-1">{banheiros === 1 ? 'Banheiro' : 'Banheiros'}</p>
                   </div>
                 )}
-                {vagas && (
+                {typeof vagas === 'number' && (
                   <div className="border border-[#e5e5e5] p-4 text-center">
                     <p className="text-[22px] font-light text-[#111111]">{vagas}</p>
                     <p className="text-[11px] tracking-widest uppercase text-[#999999] mt-1">{vagas === 1 ? 'Vaga' : 'Vagas'}</p>
