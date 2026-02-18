@@ -87,13 +87,15 @@ export default async function HomePage() {
             {/* Manuela photo - desktop version (large) */}
             <div className="hidden md:flex flex-shrink-0 w-[340px] lg:w-[400px] relative self-stretch">
               <Image
-                src="/manuela-rezenda-transparente.png"
+                src="/manuela-rezende.png"
                 alt="Manuela Rezende — Corretora de Imóveis"
                 fill
-                className="object-contain object-center"
+                className="object-cover object-top"
                 priority
                 sizes="400px"
               />
+              {/* Fade gradient on left edge to blend with dark bg */}
+              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#111111] to-transparent" />
             </div>
           </div>
         </div>
