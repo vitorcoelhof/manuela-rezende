@@ -88,17 +88,19 @@ export default async function ACorretoraPage() {
       </section>
 
       {/* Photo section */}
-      <section className="bg-white border-t border-[#e5e5e5]">
-        <div className="mx-auto max-w-6xl px-6 lg:px-8 py-12">
-          <div className="flex justify-center mb-12">
-            <div className="relative w-48 h-64 md:w-64 md:h-80">
+      <section className="bg-gradient-to-b from-white via-[#f9f9f9] to-white border-t border-[#e5e5e5]">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8 py-20">
+          <div className="flex items-center justify-center">
+            <div className="relative w-56 h-72 md:w-72 md:h-96 rounded-lg overflow-hidden shadow-lg bg-white">
               <Image
                 src="/manuela-rezenda-transparente.png"
                 alt="Manuela Rezende — Corretora de Imóveis"
                 fill
-                className="object-contain"
-                sizes="(max-width: 768px) 192px, 256px"
+                className="object-contain p-6"
+                sizes="(max-width: 768px) 224px, 288px"
               />
+              {/* Subtle border */}
+              <div className="absolute inset-0 border border-[#e5e5e5] rounded-lg pointer-events-none" />
             </div>
           </div>
         </div>
