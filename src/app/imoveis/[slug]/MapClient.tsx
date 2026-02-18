@@ -44,7 +44,7 @@ export default function MapClient({ cep, titulo }: MapClientProps) {
   }, [])
 
   useEffect(() => {
-    // Buscar coordenadas via Nominatim (OpenStreetMap)
+    // Buscar coordenadas: ViaCEP → Nominatim
     const buscarCoordenadas = async () => {
       try {
         const cepLimpo = cep.replace(/\D/g, '') // Remove caracteres não-numéricos
@@ -56,32 +56,48 @@ export default function MapClient({ cep, titulo }: MapClientProps) {
 
         console.log('Buscando coordenadas para CEP:', cepLimpo)
 
-        const url = `https://nominatim.openstreetmap.org/search?postalcode=${cepLimpo}&country=Brazil&format=json&limit=1`
-        console.log('URL:', url)
+        // Passo 1: Obter endereço via ViaCEP
+        const viaCepUrl = `https://viacep.com.br/ws/${cepLimpo}/json/`
+        const viaCepResponse = await fetch(viaCepUrl)
+        const viaCepData = await viaCepResponse.json()
 
-        const response = await fetch(url, {
+        if (viaCepData.erro) {
+          setErro('CEP não encontrado.')
+          console.warn('CEP não encontrado no ViaCEP:', cepLimpo)
+          return
+        }
+
+        // Montar endereço completo
+        const endereco = `${viaCepData.logradouro}, ${viaCepData.localidade}, ${viaCepData.uf}`
+        console.log('Endereço obtido:', endereco)
+
+        // Passo 2: Geocodificar com Nominatim
+        const nominatimUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(endereco)}&format=json&limit=1`
+        console.log('URL Nominatim:', nominatimUrl)
+
+        const nominatimResponse = await fetch(nominatimUrl, {
           headers: {
             'Accept': 'application/json'
           }
         })
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
+        if (!nominatimResponse.ok) {
+          throw new Error(`HTTP error! status: ${nominatimResponse.status}`)
         }
 
-        const data = await response.json()
-        console.log('Resposta Nominatim:', data)
+        const nominatimData = await nominatimResponse.json()
+        console.log('Resposta Nominatim:', nominatimData)
 
-        if (data.length > 0) {
+        if (nominatimData.length > 0) {
           setCoordenadas({
-            lat: parseFloat(data[0].lat),
-            lng: parseFloat(data[0].lon),
+            lat: parseFloat(nominatimData[0].lat),
+            lng: parseFloat(nominatimData[0].lon),
           })
           setErro(null)
-          console.log('Coordenadas encontradas:', data[0].lat, data[0].lon)
+          console.log('Coordenadas encontradas:', nominatimData[0].lat, nominatimData[0].lon)
         } else {
-          setErro('CEP não encontrado. Tente usar o endereço no lugar do CEP.')
-          console.warn('Nenhum resultado para CEP:', cepLimpo)
+          setErro('Não foi possível localizar as coordenadas. Tente novamente.')
+          console.warn('Nenhum resultado para endereço:', endereco)
         }
       } catch (err) {
         setErro('Erro ao buscar localização. Verifique sua conexão.')
