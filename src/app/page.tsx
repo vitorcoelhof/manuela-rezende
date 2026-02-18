@@ -56,9 +56,21 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="bg-[#111111] text-white overflow-hidden">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-start md:items-stretch gap-6 md:gap-0">
+          <div className="flex flex-col md:flex-row items-center md:items-stretch gap-0">
+            {/* Manuela photo - mobile version (appears before text on mobile) */}
+            <div className="md:hidden mb-6 w-40 h-48 relative flex-shrink-0">
+              <Image
+                src="/manuela-rezende.png"
+                alt="Manuela Rezende — Corretora de Imóveis"
+                fill
+                className="object-cover object-top"
+                priority
+                sizes="160px"
+              />
+            </div>
+
             {/* Text content */}
-            <div className="flex-1 py-24 md:py-36 md:pr-12">
+            <div className="flex-1 py-24 md:py-36 md:pr-12 text-center md:text-left">
               <p className="text-[11px] tracking-[0.25em] uppercase text-[#b8976a] font-medium mb-6">
                 Corretora de Imóveis
               </p>
@@ -82,18 +94,6 @@ export default async function HomePage() {
                   Falar com a Manuela
                 </Link>
               </div>
-            </div>
-
-            {/* Manuela photo - mobile version (small) */}
-            <div className="md:hidden flex-shrink-0 w-32 h-40 relative">
-              <Image
-                src="/manuela-rezende.png"
-                alt="Manuela Rezende — Corretora de Imóveis"
-                fill
-                className="object-cover object-top rounded"
-                priority
-                sizes="128px"
-              />
             </div>
 
             {/* Manuela photo - desktop version (large) */}
