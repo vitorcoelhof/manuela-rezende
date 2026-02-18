@@ -49,7 +49,7 @@ Template de site institucional para corretor de imóveis. Desenvolvido com Next.
 - **SEO + Open Graph** — `title`, `description` e imagem OG individuais por página; imagem padrão com foto do corretor gerada dinamicamente (1200×630)
 - **ISR (Incremental Static Regeneration)** — páginas de imóveis revalidam a cada 60s
 - **Otimização de imagens** — `next/image` com lazy loading, formato moderno, CDN Sanity
-- **Mapa Google Maps** — localização do imóvel exibida em página de detalhe (campo opcional no CMS)
+- **Mapa Interativo** — localização do imóvel em mapa OpenStreetMap + Leaflet na página de detalhe (campo opcional no CMS, 100% gratuito)
 
 ### CMS (Sanity Studio `/studio`)
 
@@ -155,15 +155,7 @@ NEXT_PUBLIC_SANITY_PROJECT_ID=<project-id>
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2024-07-11
 SANITY_API_TOKEN=<token com permissão de escrita>
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<sua-api-key-do-google-maps>
 ```
-
-**Como obter a API Key do Google Maps:**
-1. Acesse [Google Cloud Console](https://console.cloud.google.com)
-2. Crie um novo projeto ou selecione um existente
-3. Ative a API "Maps Embed API"
-4. Vá para "Credenciais" e crie uma chave de API (restriction: HTTP referrers → seu domínio Vercel)
-5. Copie a chave e adicione à sua variável `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
 
 ### Desenvolvimento
 
@@ -217,7 +209,7 @@ Para o Studio funcionar em produção, adicionar em [manage.sanity.io](https://m
 ## Melhorias Recentes
 
 ### v2.1
-- ✅ **Google Maps Integrado** — localização do imóvel exibida em embed de mapa na página de detalhes (campo opcional no CMS)
+- ✅ **Mapa OpenStreetMap** — localização do imóvel com mapa interativo Leaflet + OpenStreetMap na página de detalhes (100% gratuito, campo opcional no CMS)
 
 ### v2.0
 - ✅ **Search Strip Otimizado** — título "Encontre seu imóvel" em bold, filtros lado a lado, ícone de lupa

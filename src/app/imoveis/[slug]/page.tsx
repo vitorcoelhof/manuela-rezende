@@ -6,6 +6,7 @@ import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { IMOVEL_QUERY, IMOVEIS_SLUGS_QUERY } from '@/sanity/lib/queries'
 import GalleryClient from './GalleryClient'
+import MapClient from './MapClient'
 
 export const revalidate = 60
 
@@ -155,17 +156,7 @@ export default async function ImovelPage({ params }: PageProps) {
                 <h2 className="text-[11px] tracking-[0.2em] uppercase text-[#b8976a] font-medium mb-4">
                   Localização
                 </h2>
-                <div className="w-full h-96 border border-[#e5e5e5] rounded-sm overflow-hidden">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    loading="lazy"
-                    allowFullScreen=""
-                    referrerPolicy="no-referrer-when-downgrade"
-                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${localizacaoMapa.lat},${localizacaoMapa.lng}`}
-                  />
-                </div>
+                <MapClient lat={localizacaoMapa.lat} lng={localizacaoMapa.lng} titulo={titulo} />
               </div>
             )}
           </div>
