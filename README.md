@@ -49,6 +49,7 @@ Template de site institucional para corretor de imóveis. Desenvolvido com Next.
 - **SEO + Open Graph** — `title`, `description` e imagem OG individuais por página; imagem padrão com foto do corretor gerada dinamicamente (1200×630)
 - **ISR (Incremental Static Regeneration)** — páginas de imóveis revalidam a cada 60s
 - **Otimização de imagens** — `next/image` com lazy loading, formato moderno, CDN Sanity
+- **Mapa Google Maps** — localização do imóvel exibida em página de detalhe (campo opcional no CMS)
 
 ### CMS (Sanity Studio `/studio`)
 
@@ -66,6 +67,7 @@ Todo o conteúdo do site é gerenciado pelo corretor diretamente no Studio, sem 
 | Galeria de Fotos | Upload múltiplo (Ctrl/⌘ para selecionar vários arquivos), layout grid, drag para reordenar |
 | Descrição | Texto rich-text |
 | Destaque | Booleano |
+| Localização no Mapa | Coordenadas do imóvel (opcional) — clique no mapa no Studio para definir; exibe Google Maps na página de detalhes |
 
 #### Tipo `corretora` (singleton — 3 grupos)
 
@@ -153,7 +155,15 @@ NEXT_PUBLIC_SANITY_PROJECT_ID=<project-id>
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2024-07-11
 SANITY_API_TOKEN=<token com permissão de escrita>
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<sua-api-key-do-google-maps>
 ```
+
+**Como obter a API Key do Google Maps:**
+1. Acesse [Google Cloud Console](https://console.cloud.google.com)
+2. Crie um novo projeto ou selecione um existente
+3. Ative a API "Maps Embed API"
+4. Vá para "Credenciais" e crie uma chave de API (restriction: HTTP referrers → seu domínio Vercel)
+5. Copie a chave e adicione à sua variável `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
 
 ### Desenvolvimento
 
@@ -204,8 +214,12 @@ Para o Studio funcionar em produção, adicionar em [manage.sanity.io](https://m
 
 ---
 
-## Melhorias Recentes (v2.0)
+## Melhorias Recentes
 
+### v2.1
+- ✅ **Google Maps Integrado** — localização do imóvel exibida em embed de mapa na página de detalhes (campo opcional no CMS)
+
+### v2.0
 - ✅ **Search Strip Otimizado** — título "Encontre seu imóvel" em bold, filtros lado a lado, ícone de lupa
 - ✅ **Seção Mobile "Quem Atende Você"** — foto circular da corretora com CTA WhatsApp destacado
 - ✅ **Manuela Card no Hero** — mobile-only, com foto da corretora e botão WhatsApp no header

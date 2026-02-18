@@ -134,6 +134,12 @@ export const imovelType = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'localizacaoMapa',
+      title: 'Localização no Mapa',
+      type: 'geopoint',
+      description: 'Clique no mapa para definir a coordenada do imóvel. Campo opcional.',
+    }),
   ],
   preview: {
     select: {

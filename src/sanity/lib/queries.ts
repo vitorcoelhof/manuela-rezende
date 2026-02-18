@@ -42,6 +42,7 @@ export const IMOVEL_QUERY = defineQuery(`
     vagas,
     destaque,
     descricao,
+    localizacaoMapa,
     fotoCapa {
       asset,
       alt

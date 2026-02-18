@@ -60,7 +60,7 @@ export default async function ImovelPage({ params }: PageProps) {
 
   if (!imovel) notFound()
 
-  const { titulo, tipo, preco, localizacao, area, quartos, banheiros, vagas, descricao, fotos } = imovel
+  const { titulo, tipo, preco, localizacao, area, quartos, banheiros, vagas, descricao, fotos, localizacaoMapa } = imovel
 
   const waMsg = encodeURIComponent(`Olá Manuela, tenho interesse no imóvel "${titulo}" (${localizacao}). Poderia me enviar mais informações?`)
   const waUrl = `https://wa.me/5548999770241?text=${waMsg}`
@@ -145,6 +145,26 @@ export default async function ImovelPage({ params }: PageProps) {
                       {block.children?.map((child) => child.text).join('')}
                     </p>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Map */}
+            {localizacaoMapa?.lat && localizacaoMapa?.lng && (
+              <div className="mt-8">
+                <h2 className="text-[11px] tracking-[0.2em] uppercase text-[#b8976a] font-medium mb-4">
+                  Localização
+                </h2>
+                <div className="w-full h-96 border border-[#e5e5e5] rounded-sm overflow-hidden">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    allowFullScreen=""
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${localizacaoMapa.lat},${localizacaoMapa.lng}`}
+                  />
                 </div>
               </div>
             )}
