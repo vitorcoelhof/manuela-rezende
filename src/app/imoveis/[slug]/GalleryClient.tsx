@@ -24,7 +24,7 @@ export default function GalleryClient({ images, titulo }: GalleryClientProps) {
     <>
       {/* Main photo */}
       <div
-        className="relative w-full overflow-hidden cursor-zoom-in bg-[#f5f5f5] group"
+        className="relative w-full overflow-hidden cursor-zoom-in bg-[#111111] group"
         style={{ paddingBottom: '66.67%' }}
         onClick={() => setLightbox(active)}
       >
@@ -32,7 +32,7 @@ export default function GalleryClient({ images, titulo }: GalleryClientProps) {
           src={images[active].url}
           alt={images[active].alt}
           fill
-          className="object-cover"
+          className="object-contain"
           priority
           sizes="(max-width: 1024px) 100vw, 66vw"
         />
