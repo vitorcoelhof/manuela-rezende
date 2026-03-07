@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
-import { IMOVEL_QUERY, IMOVEIS_SLUGS_QUERY } from '@/sanity/lib/queries'
+import { IMOVEL_QUERY, IMOVEIS_SLUGS_QUERY, CORRETORA_QUERY } from '@/sanity/lib/queries'
 import GalleryClient from './GalleryClient'
 import MapClient from './MapClient'
 
@@ -57,9 +57,14 @@ const TIPO_LABEL: Record<string, string> = {
 
 export default async function ImovelPage({ params }: PageProps) {
   const { slug } = await params
-  const imovel = await client.fetch(IMOVEL_QUERY, { slug }).catch(() => null)
+  const [imovel, corretora] = await Promise.all([
+    client.fetch(IMOVEL_QUERY, { slug }).catch(() => null),
+    client.fetch(CORRETORA_QUERY, {}, { next: { revalidate: 60 } }).catch(() => null),
+  ])
 
   if (!imovel) notFound()
+
+  const fotoCorretora = corretora?.foto?.asset ? urlFor(corretora.foto).width(80).height(80).fit('crop').auto('format').url() : '/manuela-rezende.png'
 
   const { titulo, tipo, preco, localizacao, area, quartos, banheiros, vagas, descricao, fotos, cep } = imovel
 
@@ -194,7 +199,7 @@ export default async function ImovelPage({ params }: PageProps) {
                 <p className="text-[11px] tracking-[0.15em] uppercase text-[#999999] mb-3">Atendimento</p>
                 <div className="flex items-center gap-3">
                   <Image
-                    src="/manuela-rezende.png"
+                    src={fotoCorretora}
                     alt="Manuela Rezende"
                     width={40}
                     height={40}

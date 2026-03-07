@@ -4,6 +4,7 @@ import Link from 'next/link'
 import SearchStrip from '@/components/SearchStrip'
 import ImovelCard from '@/components/ImovelCard'
 import { client } from '@/sanity/lib/client'
+import { urlFor } from '@/sanity/lib/image'
 import { IMOVEIS_QUERY, CORRETORA_QUERY } from '@/sanity/lib/queries'
 
 export const revalidate = 60
@@ -50,6 +51,7 @@ export default async function HomePage() {
   const ctaTitulo = corretora?.ctaTitulo || FALLBACK_CTA_TITULO
   const ctaSubtitulo = corretora?.ctaSubtitulo || FALLBACK_CTA_SUBTITULO
   const diferenciais = corretora?.homeDiferenciais?.length ? corretora.homeDiferenciais : FALLBACK_DIFERENCIAIS
+  const fotoUrl = corretora?.foto?.asset ? urlFor(corretora.foto).width(800).height(1000).fit('crop').auto('format').url() : '/manuela-rezende.png'
 
   return (
     <>
@@ -88,7 +90,7 @@ export default async function HomePage() {
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 relative rounded-full overflow-hidden flex-shrink-0 ring-2 ring-[#b8976a]">
                     <Image
-                      src="/manuela-rezende.png"
+                      src={fotoUrl}
                       alt="Manuela Rezende"
                       fill
                       className="object-cover object-top"
@@ -117,7 +119,7 @@ export default async function HomePage() {
             {/* Manuela photo - desktop version (large) */}
             <div className="hidden md:flex flex-shrink-0 w-[340px] lg:w-[400px] relative self-stretch">
               <Image
-                src="/manuela-rezende.png"
+                src={fotoUrl}
                 alt="Manuela Rezende — Corretora de Imóveis"
                 fill
                 className="object-cover object-top"
@@ -190,7 +192,7 @@ export default async function HomePage() {
             {/* Photo */}
             <div className="w-24 h-24 relative mb-4 rounded-full overflow-hidden ring-2 ring-[#b8976a]">
               <Image
-                src="/manuela-rezende.png"
+                src={fotoUrl}
                 alt="Manuela Rezende"
                 fill
                 className="object-cover object-top"

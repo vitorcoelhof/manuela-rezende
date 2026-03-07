@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
+import { urlFor } from '@/sanity/lib/image'
 import { CORRETORA_QUERY } from '@/sanity/lib/queries'
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ const STATIC_VALORES = [
 
 export default async function ACorretoraPage() {
   const corretora = await client.fetch(CORRETORA_QUERY).catch(() => null)
+  const fotoUrl = corretora?.foto?.asset ? urlFor(corretora.foto).width(720).height(900).fit('crop').auto('format').url() : '/manuela-rezende.png'
 
   return (
     <>
@@ -75,7 +77,7 @@ export default async function ACorretoraPage() {
             {/* Photo */}
             <div className="hidden md:flex flex-shrink-0 w-[300px] lg:w-[360px] relative self-stretch">
               <Image
-                src="/manuela-rezende.png"
+                src={fotoUrl}
                 alt="Manuela Rezende — Corretora de Imóveis"
                 fill
                 className="object-cover object-top"
