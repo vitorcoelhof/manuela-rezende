@@ -1,6 +1,4 @@
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Sanity Studio | Manuela Rezende Imóveis',
   robots: 'noindex,nofollow',
 }
@@ -10,11 +8,5 @@ export default function StudioLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <html lang="pt-BR">
-      <body className="bg-white">
-        {children}
-      </body>
-    </html>
-  )
+  return <>{children}</>
 }
