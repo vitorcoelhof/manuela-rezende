@@ -16,15 +16,33 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname()
   const [mounted, setMounted] = useState(false)
+  const [isInStudio, setIsInStudio] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+
+    // Check if we're in studio mode
+    const checkStudio = () => {
+      const inStudio = document.documentElement.dataset.studio === 'true'
+      setIsInStudio(inStudio)
+    }
+
+    checkStudio()
+
+    // Also listen for changes
+    const observer = new MutationObserver(checkStudio)
+    observer.observe(document.documentElement, { attributes: true })
+
+    return () => observer.disconnect()
   }, [])
 
   const hideLayout = useMemo(() => {
     if (!pathname) return false
-    return pathname.includes('/studio') || pathname.startsWith('/imoveis/')
-  }, [pathname])
+    // Hide layout for: /studio paths, individual property pages, or when studio signal is set
+    if (isInStudio) return true
+    const isPropertyDetail = pathname.startsWith('/imoveis/')
+    return pathname.includes('/studio') || isPropertyDetail
+  }, [pathname, isInStudio])
 
   // Only render layout after client mounts to ensure pathname is available
   if (!mounted) {

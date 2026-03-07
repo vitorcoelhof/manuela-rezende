@@ -27,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.className}`}>
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   )
