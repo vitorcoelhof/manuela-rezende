@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { useMemo } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import WhatsAppButton from './WhatsAppButton'
@@ -15,11 +15,21 @@ export default function LayoutWrapper({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const hideLayout = useMemo(() => {
     if (!pathname) return false
     return pathname.includes('/studio') || pathname.startsWith('/imoveis/')
   }, [pathname])
+
+  // Only render layout after client mounts to ensure pathname is available
+  if (!mounted) {
+    return <>{children}</>
+  }
 
   return (
     <div className={hideLayout ? '' : 'flex min-h-screen flex-col bg-white text-gray-900 antialiased'}>
