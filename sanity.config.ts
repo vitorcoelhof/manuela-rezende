@@ -7,11 +7,17 @@ const plugins = [
   structureTool({
     structure: (S) =>
       S.list()
-        .title('Content')
+        .title('Conteúdo')
         .items([
-          S.documentTypeListItem('imovel').title('Imóveis'),
-          S.documentTypeListItem('corretora').title('Corretora'),
-          S.documentTypeListItem('consulta').title('Consultas'),
+          S.listItem()
+            .title('Imóveis')
+            .child(S.documentTypeList('imovel')),
+          S.listItem()
+            .title('Corretora')
+            .child(S.documentTypeList('corretora')),
+          S.listItem()
+            .title('Consultas')
+            .child(S.documentTypeList('consulta')),
         ]),
   }),
 ]
