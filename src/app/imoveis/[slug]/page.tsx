@@ -74,7 +74,7 @@ export default async function ImovelPage({ params }: PageProps) {
   const imageUrls = (fotos || [])
     .filter((f: { asset?: { _ref: string } }) => f?.asset)
     .map((f: { asset: { _ref: string }; alt?: string }, i: number) => ({
-      url: urlFor(f).width(1200).height(800).fit('crop').auto('format').url(),
+      url: urlFor(f).width(1200).auto('format').url(),
       thumb: urlFor(f).width(300).height(200).fit('crop').auto('format').url(),
       alt: f.alt || `${titulo} — foto ${i + 1}`,
     }))
