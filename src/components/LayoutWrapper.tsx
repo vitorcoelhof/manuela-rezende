@@ -15,15 +15,18 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname()
   const isStudio = pathname.startsWith('/studio')
+  const isImovelDetail = pathname.startsWith('/imoveis/')
+
+  const hideLayout = isStudio || isImovelDetail
 
   return (
     <>
-      {!isStudio && <Header />}
+      {!hideLayout && <Header />}
       <main className="flex-1">
         {children}
       </main>
-      {!isStudio && <Footer />}
-      {!isStudio && <WhatsAppButton phoneNumber={WHATSAPP_NUMBER} message={WHATSAPP_MESSAGE} />}
+      {!hideLayout && <Footer />}
+      {!hideLayout && <WhatsAppButton phoneNumber={WHATSAPP_NUMBER} message={WHATSAPP_MESSAGE} />}
     </>
   )
 }
