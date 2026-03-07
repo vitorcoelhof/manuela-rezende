@@ -20,13 +20,13 @@ export default function LayoutWrapper({
   const hideLayout = isStudio || isImovelDetail
 
   return (
-    <>
+    <div className={hideLayout ? '' : 'flex min-h-screen flex-col bg-white text-gray-900 antialiased'}>
       {!hideLayout && <Header />}
-      <main className="flex-1">
+      <main className={hideLayout ? '' : 'flex-1'}>
         {children}
       </main>
       {!hideLayout && <Footer />}
       {!hideLayout && <WhatsAppButton phoneNumber={WHATSAPP_NUMBER} message={WHATSAPP_MESSAGE} />}
-    </>
+    </div>
   )
 }
