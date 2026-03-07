@@ -110,11 +110,14 @@ export const imovelType = defineType({
       name: 'fotos',
       title: 'Galeria de Fotos',
       type: 'array',
-      description: 'Selecione todas as fotos de uma vez: clique em "Add item" → "Upload" e segure Ctrl (Windows) ou ⌘ (Mac) para selecionar múltiplos arquivos. Arraste para reordenar.',
+      description: 'Clique em "Add item" → "Upload" e selecione as fotos. Você pode adicionar várias de uma vez. Arraste os cards para reordenar.',
       of: [
         {
           type: 'image',
-          options: { hotspot: true },
+          options: {
+            hotspot: true,
+            accept: 'image/*',
+          },
           fields: [
             defineField({
               name: 'alt',
@@ -127,6 +130,7 @@ export const imovelType = defineType({
       options: {
         layout: 'grid',
       },
+      validation: (rule) => rule.min(1).error('Adicione pelo menos uma foto'),
     }),
     defineField({
       name: 'destaque',
