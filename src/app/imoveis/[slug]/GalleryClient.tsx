@@ -43,11 +43,11 @@ export default function GalleryClient({ images, titulo }: GalleryClientProps) {
             {/* Previous button */}
             {active > 0 && (
               <button
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 md:opacity-0 md:group-hover:opacity-100 opacity-60 hover:opacity-100 transition-opacity text-white/70 hover:text-white p-2"
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/75 text-white transition-colors rounded-full p-2"
                 onClick={(e) => { e.stopPropagation(); setActive(active - 1) }}
                 aria-label="Foto anterior"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-7 w-7 drop-shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-5 w-5">
                   <path d="m15 18-6-6 6-6" />
                 </svg>
               </button>
@@ -56,11 +56,11 @@ export default function GalleryClient({ images, titulo }: GalleryClientProps) {
             {/* Next button */}
             {active < images.length - 1 && (
               <button
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 md:opacity-0 md:group-hover:opacity-100 opacity-60 hover:opacity-100 transition-opacity text-white/70 hover:text-white p-2"
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/75 text-white transition-colors rounded-full p-2"
                 onClick={(e) => { e.stopPropagation(); setActive(active + 1) }}
                 aria-label="Próxima foto"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-7 w-7 drop-shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-5 w-5">
                   <path d="m9 18 6-6-6-6" />
                 </svg>
               </button>
