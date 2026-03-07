@@ -44,10 +44,37 @@ const FAIXAS = [
   { value: '2000000-', label: 'Acima de R$ 2 mi' },
 ]
 
+const QUARTOS = [
+  { value: '', label: 'Qualquer nº de quartos' },
+  { value: '1', label: '1 quarto' },
+  { value: '2', label: '2 quartos' },
+  { value: '3', label: '3 quartos' },
+  { value: '4', label: '4 quartos' },
+  { value: '5', label: '5+ quartos' },
+]
+
+const BANHEIROS = [
+  { value: '', label: 'Qualquer nº de banheiros' },
+  { value: '1', label: '1 banheiro' },
+  { value: '2', label: '2 banheiros' },
+  { value: '3', label: '3 banheiros' },
+  { value: '4', label: '4+ banheiros' },
+]
+
+const VAGAS = [
+  { value: '', label: 'Qualquer nº de vagas' },
+  { value: '1', label: '1 vaga' },
+  { value: '2', label: '2 vagas' },
+  { value: '3', label: '3 vagas' },
+  { value: '4', label: '4+ vagas' },
+]
+
 export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '' }: ImovelGridProps) {
   const [tipo, setTipo] = useState(initialTipo)
   const [faixa, setFaixa] = useState(initialFaixa)
-  const [busca, setBusca] = useState('')
+  const [quartos, setQuartos] = useState('')
+  const [banheiros, setBanheiros] = useState('')
+  const [vagas, setVagas] = useState('')
 
   const filtered = useMemo(() => {
     return imoveis.filter((im) => {
@@ -59,17 +86,38 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
         if (max !== null && im.preco > max) return false
       }
 
-      if (busca.trim()) {
-        const q = busca.toLowerCase()
-        const haystack = `${im.titulo} ${im.localizacao} ${im.bairro || ''}`.toLowerCase()
-        if (!haystack.includes(q)) return false
+      if (quartos) {
+        const qtQuartos = Number(quartos)
+        if (quartos === '5') {
+          if (!im.quartos || im.quartos < 5) return false
+        } else {
+          if (!im.quartos || im.quartos !== qtQuartos) return false
+        }
+      }
+
+      if (banheiros) {
+        const qtBanheiros = Number(banheiros)
+        if (banheiros === '4') {
+          if (!im.banheiros || im.banheiros < 4) return false
+        } else {
+          if (!im.banheiros || im.banheiros !== qtBanheiros) return false
+        }
+      }
+
+      if (vagas) {
+        const qtVagas = Number(vagas)
+        if (vagas === '4') {
+          if (!im.vagas || im.vagas < 4) return false
+        } else {
+          if (!im.vagas || im.vagas !== qtVagas) return false
+        }
       }
 
       return true
     })
-  }, [imoveis, tipo, faixa, busca])
+  }, [imoveis, tipo, faixa, quartos, banheiros, vagas])
 
-  const hasFilters = tipo || faixa || busca.trim()
+  const hasFilters = tipo || faixa || quartos || banheiros || vagas
 
   return (
     <>
@@ -77,28 +125,6 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
       <div className="bg-white border-b border-[#e5e5e5] sticky top-[72px] z-30">
         <div className="mx-auto max-w-6xl px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row gap-3">
-            {/* Search */}
-            <div className="relative flex-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#999999]"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.35-4.35" />
-              </svg>
-              <input
-                type="text"
-                placeholder="Buscar por título ou localização..."
-                value={busca}
-                onChange={(e) => setBusca(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 border border-[#e5e5e5] text-[13px] text-[#111111] placeholder:text-[#999999] focus:outline-none focus:border-[#111111] transition-colors bg-white"
-              />
-            </div>
-
             {/* Tipo */}
             <select
               value={tipo}
@@ -121,10 +147,43 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
               ))}
             </select>
 
+            {/* Quartos */}
+            <select
+              value={quartos}
+              onChange={(e) => setQuartos(e.target.value)}
+              className="px-4 py-2.5 border border-[#e5e5e5] text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-8"
+            >
+              {QUARTOS.map((q) => (
+                <option key={q.value} value={q.value}>{q.label}</option>
+              ))}
+            </select>
+
+            {/* Banheiros */}
+            <select
+              value={banheiros}
+              onChange={(e) => setBanheiros(e.target.value)}
+              className="px-4 py-2.5 border border-[#e5e5e5] text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-8"
+            >
+              {BANHEIROS.map((b) => (
+                <option key={b.value} value={b.value}>{b.label}</option>
+              ))}
+            </select>
+
+            {/* Vagas */}
+            <select
+              value={vagas}
+              onChange={(e) => setVagas(e.target.value)}
+              className="px-4 py-2.5 border border-[#e5e5e5] text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-8"
+            >
+              {VAGAS.map((v) => (
+                <option key={v.value} value={v.value}>{v.label}</option>
+              ))}
+            </select>
+
             {/* Clear */}
             {hasFilters && (
               <button
-                onClick={() => { setTipo(''); setFaixa(''); setBusca('') }}
+                onClick={() => { setTipo(''); setFaixa(''); setQuartos(''); setBanheiros(''); setVagas('') }}
                 className="px-4 py-2.5 text-[12px] font-medium tracking-wide uppercase text-[#666666] border border-[#e5e5e5] hover:border-[#111111] hover:text-[#111111] transition-colors"
               >
                 Limpar
@@ -146,7 +205,7 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
           <div className="py-24 text-center">
             <p className="text-[15px] text-[#666666]">Nenhum imóvel encontrado com os filtros selecionados.</p>
             <button
-              onClick={() => { setTipo(''); setFaixa(''); setBusca('') }}
+              onClick={() => { setTipo(''); setFaixa(''); setQuartos(''); setBanheiros(''); setVagas('') }}
               className="mt-4 text-[13px] font-medium text-[#b8976a] hover:underline"
             >
               Limpar filtros
