@@ -3,7 +3,18 @@ import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './sanity/schemaTypes'
 
-const plugins = [structureTool()]
+const plugins = [
+  structureTool({
+    structure: (S) =>
+      S.list()
+        .title('Content')
+        .items([
+          S.documentTypeListItem('imovel').title('Imóveis'),
+          S.documentTypeListItem('corretora').title('Corretora'),
+          S.documentTypeListItem('consulta').title('Consultas'),
+        ]),
+  }),
+]
 
 // Vision tool (debug/exploration) only enabled in development
 if (process.env.NODE_ENV === 'development') {
