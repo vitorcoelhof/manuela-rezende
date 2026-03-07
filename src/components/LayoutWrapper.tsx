@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import { useMemo } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import WhatsAppButton from './WhatsAppButton'
@@ -14,10 +15,11 @@ export default function LayoutWrapper({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
-  const isStudio = pathname.startsWith('/studio')
-  const isImovelDetail = pathname.startsWith('/imoveis/')
 
-  const hideLayout = isStudio || isImovelDetail
+  const hideLayout = useMemo(() => {
+    if (!pathname) return false
+    return pathname.includes('/studio') || pathname.startsWith('/imoveis/')
+  }, [pathname])
 
   return (
     <div className={hideLayout ? '' : 'flex min-h-screen flex-col bg-white text-gray-900 antialiased'}>
