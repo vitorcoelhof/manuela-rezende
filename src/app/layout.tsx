@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import WhatsAppButton from '@/components/WhatsAppButton'
+import LayoutWrapper from '@/components/LayoutWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,11 +19,6 @@ export const metadata: Metadata = {
   },
 }
 
-// WhatsApp number — PLACEHOLDER until confirmed by client
-// Format: E.164 without '+' — e.g. '5511987654321' for São Paulo mobile
-const WHATSAPP_NUMBER = '5548999770241'
-const WHATSAPP_MESSAGE = 'Olá, gostaria de mais informações sobre um imóvel'
-
 export default function RootLayout({
   children,
 }: {
@@ -34,12 +27,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.className} flex min-h-screen flex-col bg-white text-gray-900 antialiased`}>
-        <Header />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton phoneNumber={WHATSAPP_NUMBER} message={WHATSAPP_MESSAGE} />
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   )
