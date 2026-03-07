@@ -7,6 +7,7 @@ interface GalleryImage {
   url: string
   thumb: string
   alt: string
+  aspectRatio: number
 }
 
 interface GalleryClientProps {
@@ -24,15 +25,15 @@ export default function GalleryClient({ images, titulo }: GalleryClientProps) {
     <>
       {/* Main photo */}
       <div
-        className="relative w-full overflow-hidden cursor-zoom-in bg-[#111111] group"
-        style={{ paddingBottom: '66.67%' }}
+        className="relative w-full overflow-hidden cursor-zoom-in bg-[#f5f5f5] group"
+        style={{ paddingBottom: `${(1 / images[active].aspectRatio) * 100}%` }}
         onClick={() => setLightbox(active)}
       >
         <Image
           src={images[active].url}
           alt={images[active].alt}
           fill
-          className="object-contain"
+          className="object-cover"
           priority
           sizes="(max-width: 1024px) 100vw, 66vw"
         />

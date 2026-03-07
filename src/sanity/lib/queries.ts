@@ -49,7 +49,9 @@ export const IMOVEL_QUERY = defineQuery(`
     },
     fotos[] {
       asset,
-      alt
+      alt,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height
     }
   }
 `)
