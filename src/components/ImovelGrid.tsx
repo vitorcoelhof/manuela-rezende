@@ -122,14 +122,14 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
   return (
     <>
       {/* Filters bar */}
-      <div className="bg-white border-b border-[#e5e5e5] sticky top-[72px] z-30">
-        <div className="mx-auto max-w-6xl px-6 lg:px-8 py-4">
-          <div className="flex flex-col sm:flex-row gap-3">
+      <div className="bg-white border-b border-[#e5e5e5] sm:sticky sm:top-[72px] z-30">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-2 sm:py-4">
+          <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 sm:gap-3">
             {/* Tipo */}
             <select
               value={tipo}
               onChange={(e) => setTipo(e.target.value)}
-              className="px-4 py-2.5 border border-[#e5e5e5] text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-8"
+              className="px-2 sm:px-4 py-1.5 sm:py-2.5 border border-[#e5e5e5] text-[11px] sm:text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-6 sm:pr-8"
             >
               {TIPOS.map((t) => (
                 <option key={t.value} value={t.value}>{t.label}</option>
@@ -140,7 +140,7 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
             <select
               value={faixa}
               onChange={(e) => setFaixa(e.target.value)}
-              className="px-4 py-2.5 border border-[#e5e5e5] text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-8"
+              className="px-2 sm:px-4 py-1.5 sm:py-2.5 border border-[#e5e5e5] text-[11px] sm:text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-6 sm:pr-8"
             >
               {FAIXAS.map((f) => (
                 <option key={f.value} value={f.value}>{f.label}</option>
@@ -151,7 +151,7 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
             <select
               value={quartos}
               onChange={(e) => setQuartos(e.target.value)}
-              className="px-4 py-2.5 border border-[#e5e5e5] text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-8"
+              className="px-2 sm:px-4 py-1.5 sm:py-2.5 border border-[#e5e5e5] text-[11px] sm:text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-6 sm:pr-8"
             >
               {QUARTOS.map((q) => (
                 <option key={q.value} value={q.value}>{q.label}</option>
@@ -162,7 +162,7 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
             <select
               value={banheiros}
               onChange={(e) => setBanheiros(e.target.value)}
-              className="px-4 py-2.5 border border-[#e5e5e5] text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-8"
+              className="px-2 sm:px-4 py-1.5 sm:py-2.5 border border-[#e5e5e5] text-[11px] sm:text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-6 sm:pr-8"
             >
               {BANHEIROS.map((b) => (
                 <option key={b.value} value={b.value}>{b.label}</option>
@@ -173,7 +173,7 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
             <select
               value={vagas}
               onChange={(e) => setVagas(e.target.value)}
-              className="px-4 py-2.5 border border-[#e5e5e5] text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-8"
+              className="px-2 sm:px-4 py-1.5 sm:py-2.5 border border-[#e5e5e5] text-[11px] sm:text-[13px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors bg-white appearance-none pr-6 sm:pr-8 col-span-2 sm:col-span-1"
             >
               {VAGAS.map((v) => (
                 <option key={v.value} value={v.value}>{v.label}</option>
@@ -184,7 +184,7 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
             {hasFilters && (
               <button
                 onClick={() => { setTipo(''); setFaixa(''); setQuartos(''); setBanheiros(''); setVagas('') }}
-                className="px-4 py-2.5 text-[12px] font-medium tracking-wide uppercase text-[#666666] border border-[#e5e5e5] hover:border-[#111111] hover:text-[#111111] transition-colors"
+                className="px-2 sm:px-4 py-1.5 sm:py-2.5 text-[10px] sm:text-[12px] font-medium tracking-wide uppercase text-[#666666] border border-[#e5e5e5] hover:border-[#111111] hover:text-[#111111] transition-colors col-span-2 sm:col-span-1"
               >
                 Limpar
               </button>
@@ -192,7 +192,7 @@ export default function ImovelGrid({ imoveis, initialTipo = '', initialFaixa = '
           </div>
 
           {/* Results count */}
-          <p className="mt-2 text-[11px] text-[#999999]">
+          <p className="mt-1.5 sm:mt-2 text-[10px] sm:text-[11px] text-[#999999]">
             {filtered.length} {filtered.length === 1 ? 'imóvel encontrado' : 'imóveis encontrados'}
             {hasFilters && ' (com filtros aplicados)'}
           </p>
