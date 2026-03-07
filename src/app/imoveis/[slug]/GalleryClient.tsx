@@ -43,7 +43,7 @@ export default function GalleryClient({ images, titulo }: GalleryClientProps) {
             {/* Previous button */}
             {active > 0 && (
               <button
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity text-white/70 hover:text-white p-2"
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 md:opacity-0 md:group-hover:opacity-100 opacity-60 hover:opacity-100 transition-opacity text-white/70 hover:text-white p-2"
                 onClick={(e) => { e.stopPropagation(); setActive(active - 1) }}
                 aria-label="Foto anterior"
               >
@@ -56,7 +56,7 @@ export default function GalleryClient({ images, titulo }: GalleryClientProps) {
             {/* Next button */}
             {active < images.length - 1 && (
               <button
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity text-white/70 hover:text-white p-2"
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 md:opacity-0 md:group-hover:opacity-100 opacity-60 hover:opacity-100 transition-opacity text-white/70 hover:text-white p-2"
                 onClick={(e) => { e.stopPropagation(); setActive(active + 1) }}
                 aria-label="Próxima foto"
               >

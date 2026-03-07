@@ -110,7 +110,7 @@ export const imovelType = defineType({
       name: 'fotos',
       title: 'Galeria de Fotos',
       type: 'array',
-      description: 'Clique em "Add item" → "Upload" e selecione as fotos. Você pode adicionar várias de uma vez. Arraste os cards para reordenar.',
+      description: 'Clique em "Add item" → "Upload" para adicionar fotos. Para adicionar múltiplas: clique Upload, selecione uma foto, confirme. Repita para cada foto. Arraste os cards para reordenar.',
       of: [
         {
           type: 'image',
